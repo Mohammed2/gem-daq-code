@@ -1,0 +1,2 @@
+xDAQ application that uses tstore client to connect to DB, loop over the values in a table 
+and cout the values
