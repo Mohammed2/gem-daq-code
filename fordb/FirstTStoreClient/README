@@ -1,5 +1,5 @@
 Simple xDAQ application that connects to a DB, methods to access the values and 
-insert new ones are applied using tstore client
+insert new ones are implemented using tstore client
 
 ###################################
 
