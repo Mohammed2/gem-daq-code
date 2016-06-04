@@ -1,2 +1,24 @@
 xDAQ application that uses tstore client to connect to DB, loop over the values in a table 
 and cout the values
+
+
+###################################
+
+1.- Compilation 
+
+    make  (first need to set the environment variables as in any xdaq app)
+
+2.- Execution
+
+
+    export TSTORE_XML=$PWD/views/   (This is the file which specifiy which table(s) from the database to look at)
+    xdaq.sh  -p 12345 -c $PWD/xml/hellotstore.xml -e $PWD/xml/hellotstore.profile
+
+3. In the browser 
+
+   Once inside the browser
+
+   http://gem904daq01.cern.ch:12345/urn:xdaq-application:lid=121/query  (somehow by just clicking the query link does not work need to fix)
+
+
+4. Values for the AMC13 table will be displayed in the terminal
