@@ -1,6 +1,5 @@
-xDAQ application that uses tstore client to connect to DB, loop over the values in a table 
-and cout the values
-
+Simple xDAQ application that connects to a DB, methods to access the values and 
+insert new ones are applied using tstore client
 
 ###################################
 
@@ -10,15 +9,18 @@ and cout the values
 
 2.- Execution
 
-
-    export TSTORE_XML=$PWD/views/   (This is the file which specifiy which table(s) from the database to look at)
+    export TSTORE_XML=$PWD/views/   (View files define which table we will look at)
     xdaq.sh  -p 12345 -c $PWD/xml/hellotstore.xml -e $PWD/xml/hellotstore.profile
 
 3. In the browser 
 
    Once inside the browser
 
-   http://gem904daq01.cern.ch:12345/urn:xdaq-application:lid=121/query  (somehow by just clicking the query link does not work need to fix)
+   http://gem904daq01.cern.ch:12345/urn:xdaq-application:lid=121/query  (somehow by just clicking the query link does not work 
+   need to fix it)
 
 
-4. Values for the AMC13 table will be displayed in the terminal
+4. Values for the AMC13 table are stored in xdata::Table format and printed out in terminal
+
+5. Insert functionality can be added as well (in progress)
+
