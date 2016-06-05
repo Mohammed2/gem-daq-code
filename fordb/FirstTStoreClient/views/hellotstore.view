@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<tstore:configuration xmlns:tstore="urn:xdaq-tstore:1.0">
+
+  <tstore:view id="urn:tstore-view-SQL:HelloTStore">
+    <tstore:connection dbname="devdb11" xmlns:tstore="urn:xdaq-tstore:1.0"/>
+<!--
+    <sql:query xmlns:sql="urn:tstore-view-SQL" name="hello">
+      <![CDATA[select 'hello world' from dual]]>
+    </sql:query>
+-->
+    <sql:query xmlns:sql="urn:tstore-view-SQL" name="hello">
+      <sql:table name="AMC13">
+      </sql:table>
+    </sql:query>
+
+  </tstore:view>
+</tstore:configuration>
