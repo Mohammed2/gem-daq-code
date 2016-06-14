@@ -80,6 +80,7 @@ std::string HelloTStore::connect() throw (xcept::Exception) {
   TStoreRequest request("connect");
 	
   //add the view ID
+  //  request.addTStoreParameter("id","urn:tstore-view-SQL:HelloTStore");
   request.addTStoreParameter("id","urn:tstore-view-SQL:HelloTStore");
 	
   //this parameter is mandatory. "basic" is the only value allowed at the moment
@@ -130,7 +131,7 @@ void HelloTStore::query(const std::string &connectionID,xdata::Table &results) t
   //for an SQLView, the name parameter refers to the name of a query section in the configuration
   //We'll use the "hello" one.
   request.addViewSpecificParameter("name","hello");
-	
+  
   xoap::MessageReference message=request.toSOAP();
   xoap::MessageReference response=sendSOAPMessage(message);
 	
