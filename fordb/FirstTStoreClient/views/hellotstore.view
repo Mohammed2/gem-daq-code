@@ -5,12 +5,19 @@
     <tstore:connection dbname="devdb11" xmlns:tstore="urn:xdaq-tstore:1.0"/>
 <!--
     <sql:query xmlns:sql="urn:tstore-view-SQL" name="hello">
-      <![CDATA[select 'hello world' from dual]]>
+      <![CDATA[select * from AMC13]]>
     </sql:query>
+
 -->
     <sql:query xmlns:sql="urn:tstore-view-SQL" name="hello">
+      <![CDATA[select CONFIGURATION.RUNNUMBER,AMC13.AMC13ID,AMC13.AMCINPUTENABLELIST,AMC.GLIBID
+               from AMC13,CONFIGURATION,AMC
+               where CONFIGURATION.RUNNUMBER=256
+      ]]>
+<!--
       <sql:table name="AMC13">
       </sql:table>
+-->
     </sql:query>
 
   </tstore:view>
