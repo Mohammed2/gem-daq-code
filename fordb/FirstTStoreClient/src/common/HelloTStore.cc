@@ -33,6 +33,7 @@ void HelloTStore::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excep
   *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
   *out << cgicc::title("Simple Query") << std::endl;
   *out << cgicc::a("Query").set("href",method) << std::endl;
+  
   //  *out << "<a href=\"query\">Query</a>" << std::endl;
   //  *out << "<a href=\"insert\">Insert</a>" << std::endl;
 }
@@ -48,14 +49,20 @@ void HelloTStore::query(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
     std::vector<std::string> columns=results.getColumns();
     for (unsigned long rowIndex=0;rowIndex<results.getRowCount();rowIndex++ ) {
       LOG4CPLUS_INFO(this->getApplicationLogger(),"\n");
+      *out<<"  index  "<<rowIndex<<std::endl;
       for (std::vector<std::string>::iterator column=columns.begin(); column!=columns.end(); ++column) {
 	std::string value=results.getValueAt(rowIndex,*column)->toString();
 	LOG4CPLUS_INFO(this->getApplicationLogger(),*column+": "+value);
+	*out<<"  Column  "<<*column<<"              "<<"   Value  "<<value<<std::endl;
       }
     }
+
+
   } catch (xcept::Exception &e) {
     LOG4CPLUS_ERROR(this->getApplicationLogger(),xcept::stdformat_exception_history(e));
   }
+
+
 }
 
 xoap::MessageReference HelloTStore::sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception) {
