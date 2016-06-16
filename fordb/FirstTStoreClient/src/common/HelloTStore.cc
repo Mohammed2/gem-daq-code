@@ -6,6 +6,8 @@
 #include "xcept/tools.h"
 #include "xgi/Utils.h"
 #include "xgi/Method.h"
+#include "xdaq/WebApplication.h"
+#include "cgicc/HTMLClasses.h"
 //#include "tstoretest/RandomData.h"
 
 XDAQ_INSTANTIATOR_IMPL(HelloTStore)
@@ -22,7 +24,16 @@ throw (xdaq::exception::Exception): xdaq::Application(s)
 
 void HelloTStore::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::exception::Exception) {
   //a link to the call query method below
-  *out << "<a href=\"query\">Query</a>" << std::endl;
+  
+  std::string method =
+    toolbox::toString("/%s/query",getApplicationDescriptor()->getURN().c_str());
+
+  
+  *out << cgicc::HTMLDoctype(cgicc::HTMLDoctype::eStrict) << std::endl;
+  *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
+  *out << cgicc::title("Simple Query") << std::endl;
+  *out << cgicc::a("Query").set("href",method) << std::endl;
+  //  *out << "<a href=\"query\">Query</a>" << std::endl;
   //  *out << "<a href=\"insert\">Insert</a>" << std::endl;
 }
 
