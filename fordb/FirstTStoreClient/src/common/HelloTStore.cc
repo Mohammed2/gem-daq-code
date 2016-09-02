@@ -105,7 +105,7 @@ std::string HelloTStore::connect() throw (xcept::Exception) {
   request.addTStoreParameter("authentication","basic");
 	
   //login credentials in format username/password
-  request.addTStoreParameter("credentials","castaned/Lederman12");
+  request.addTStoreParameter("credentials","castaned/XXXXX");  //change for your username/password
 	
   //connection will time out after 10 minutes
   toolbox::TimeInterval timeout(600,0); 
