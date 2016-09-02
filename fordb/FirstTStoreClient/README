@@ -3,6 +3,11 @@ insert new ones are implemented using tstore client
 
 ###################################
 
+0.  src/common/HelloTStore.cc change   
+
+  request.addTStoreParameter("credentials","castaned/XXXXX");  //change for your username/password
+
+
 1.- Compilation 
 
     make  (first need to set the environment variables as in any xdaq app)
