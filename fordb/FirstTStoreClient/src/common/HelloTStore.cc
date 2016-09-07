@@ -105,7 +105,8 @@ std::string HelloTStore::connect() throw (xcept::Exception) {
   request.addTStoreParameter("authentication","basic");
 	
   //login credentials in format username/password
-  request.addTStoreParameter("credentials","castaned/XXXXX");  //change for your username/password
+  //  request.addTStoreParameter("credentials","castaned/XXXXX");  // testDB change for your username/password
+  request.addTStoreParameter("credentials","CMS_GEM_APPUSER_R/XXXXX");  //GEMDB change for your username/password
 	
   //connection will time out after 10 minutes
   toolbox::TimeInterval timeout(600,0); 
