@@ -1,6 +1,11 @@
 Simple xDAQ application that connects to a DB, methods to access the values and 
 insert new ones are implemented using tstore client
 
+
+source oracle environment
+source /afs/cern.ch/project/oracle/script/setoraenv.sh
+
+
 ###################################
 
 0.  src/common/HelloTStore.cc change   
@@ -21,11 +26,8 @@ insert new ones are implemented using tstore client
 
    Once inside the browser
 
-   http://gem904daq01.cern.ch:12345/urn:xdaq-application:lid=121/query  (somehow by just clicking the query link does not work 
-   need to fix it)
+   http://gem904daq01.cern.ch:12345 (enter tstore application and select the query method)
 
 
-4. Values for the AMC13 table are stored in xdata::Table format and printed out in terminal
-
-5. Insert functionality can be added as well (in progress)
+4.- Different view can be configure, so far views/ directory include calls to VFAT2 configuration table
 
