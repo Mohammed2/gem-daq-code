@@ -6,13 +6,11 @@
     <!--    <tstore:connection dbname="devdb11" xmlns:tstore="urn:xdaq-tstore:1.0"/>   -->
     <sql:query xmlns:sql="urn:tstore-view-SQL" name="hello">
       <!-- <![CDATA[select 'hello world' from dual]]> -->
-      <!--
-      <![CDATA[select CONFIGURATION.RUNNUMBER,AMC13.AMC13ID,AMC13.AMCINPUTENABLELIST,AMC.GLIBID from AMC13,CONFIGURATION,AMC where CONFIGURATION.RUNNUMBER=256
-      ]]>
-      -->
-      <![CDATA[SELECT VFATCONF.BIAS_VCAL
+<!--      <![CDATA[SELECT VFATCONF.BIAS_VCAL
 	       FROM CMS_GEM_MUON_VIEW.GEM_VFAT2_CONFIGURATION_VIEW VFATCONF
-	       WHERE VFATCONF.VFAT2_SERNUM = '0xfe3c']]>
+	       WHERE VFATCONF.VFAT2_SERNUM = '0xfe3c']]> -->
+      <![CDATA[SELECT *
+	       FROM CMS_GEM_MUON_VIEW.GEM_VFAT2_CONFIGURATION_VIEW VFATCONF]]>
     </sql:query>
 
   </tstore:view>
