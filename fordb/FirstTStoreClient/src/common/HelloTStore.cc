@@ -1,4 +1,4 @@
-#include "HelloTStore.h"
+o#include "HelloTStore.h"
 #include "TStoreRequest.h"
 #include "toolbox/TimeInterval.h"
 #include "tstore/client/AttachmentUtils.h"
@@ -19,6 +19,8 @@ throw (xdaq::exception::Exception): xdaq::Application(s)
   xgi::bind(this,&HelloTStore::query, "query");
   //  xgi::bind(this,&HelloTStore::insert, "insert");
   xgi::bind(this,&HelloTStore::Default, "Default");
+
+  xdata::UnsignedLong myParameter_;
 
 }
 
