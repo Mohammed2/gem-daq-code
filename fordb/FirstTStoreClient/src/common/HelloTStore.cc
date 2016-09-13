@@ -1,4 +1,4 @@
-o#include "HelloTStore.h"
+#include "HelloTStore.h"
 #include "TStoreRequest.h"
 #include "toolbox/TimeInterval.h"
 #include "tstore/client/AttachmentUtils.h"
