@@ -19,8 +19,10 @@ throw (xdaq::exception::Exception): xdaq::Application(s)
   xgi::bind(this,&HelloTStore::query, "query");
   //  xgi::bind(this,&HelloTStore::insert, "insert");
   xgi::bind(this,&HelloTStore::Default, "Default");
+  xgi::bind(this,&HelloTStore::setParameter, "setParameter");
 
-  xdata::UnsignedLong myParameter_;
+  getApplicationInfoSpace()->fireItemAvailable("myParameter", &myParameter_);
+  //  xdata::UnsignedLong myParameter_;
 
 }
 
@@ -30,11 +32,25 @@ void HelloTStore::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excep
   std::string method =
     toolbox::toString("/%s/query",getApplicationDescriptor()->getURN().c_str());
 
-  
+  std::string method2=
+    toolbox::toString("/%s/setParameter",getApplicationDescriptor()->getURN().c_str());
+ 
   *out << cgicc::HTMLDoctype(cgicc::HTMLDoctype::eStrict) << std::endl;
   *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
   *out << cgicc::title("Simple Query") << std::endl;
   *out << cgicc::a("Query").set("href",method) << std::endl;
+
+
+  *out << cgicc::fieldset().set("style","font-size: 10pt; font-family: arial;")
+    *out << std::endl;
+  *out << cgicc::legend("Set the value of myParameter") << cgicc::p() << std::endl;
+  *out << cgicc::form().set("method","GET").set("action", method) << std::endl;
+  *out << cgicc::input().set("type","text").set("name","value").set("value", myParameter_.toString())
+										  *out << std::endl;
+  *out << cgicc::input().set("type","submit").set("value","Apply") << std::endl;
+  *out << cgicc::form() << std::endl;
+  *out << cgicc::fieldset(); 
+  
   
   //  *out << "<a href=\"query\">Query</a>" << std::endl;
   //  *out << "<a href=\"insert\">Insert</a>" << std::endl;
