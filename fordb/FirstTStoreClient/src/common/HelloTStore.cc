@@ -162,6 +162,21 @@ void HelloTStore::query(const std::string &connectionID,xdata::Table &results) t
 }
 
 
+void HelloTStore::setParameter(xgi::Input * in, xgi::Output * out ) throw (xgi::exception::Exception) {
+  try
+    {
+      cgicc::Cgicc cgi(in);
+      myParameter_ = cgi["value"]->getIntegerValue();
+      this->Default(in,out);
+    }
+  catch (const std::exception & e)
+    {
+      XCEPT_RAISE(xgi::exception::Exception, e.what());
+    }	
+}
+
+
+
 // void insert(xgi::Input * in, xgi::Output * out ) throw (xgi::exception::Exception) {
 //   try {
 //     xdata::Table results;
