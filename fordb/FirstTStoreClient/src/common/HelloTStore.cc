@@ -44,7 +44,7 @@ void HelloTStore::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excep
   *out << cgicc::fieldset().set("style","font-size: 10pt; font-family: arial;");
   *out << std::endl;
   *out << cgicc::legend("Set the value of myParameter") << cgicc::p() << std::endl;
-  *out << cgicc::form().set("method","GET").set("action", method) << std::endl;
+  *out << cgicc::form().set("method2","GET").set("action", method2) << std::endl;
   *out << cgicc::input().set("type","text").set("name","value").set("value", myParameter_.toString());
   *out << std::endl;
   *out << cgicc::input().set("type","submit").set("value","Run Number") << std::endl;
@@ -74,7 +74,6 @@ void HelloTStore::query(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
 	*out<<"  Column  "<<*column<<"              "<<"   Value  "<<value<<std::endl;
       }
     }
-    *out<<"  Parameter  "<<myParameter_<<std::endl;
 
 
   } catch (xcept::Exception &e) {
@@ -187,6 +186,8 @@ void HelloTStore::setParameter(xgi::Input * in, xgi::Output * out ) throw (xgi::
       cgicc::Cgicc cgi(in);
       myParameter_ = cgi["value"]->getIntegerValue();
       this->Default(in,out);
+      *out<<"  Parameter  "<<myParameter_<<std::endl;
+
     }
   catch (const std::exception & e)
     {
