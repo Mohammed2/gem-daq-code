@@ -27,7 +27,7 @@ source /afs/cern.ch/project/oracle/script/setoraenv.sh
 3. In the browser 
 
 
-   http://gem904daq01.cern.ch:12345 (enter tstore application and select the HelloTStore application)}
+   http://gem904daq01.cern.ch:12345 (click on the HelloTStore application)}
 
 
 4.- Type the Run Number to extract VFAT2 configuration parameters (for the moment in the database only RUN_NUMBER=1 is defined)
