@@ -16,10 +16,10 @@ HelloTStore::HelloTStore(xdaq::ApplicationStub * s)
 throw (xdaq::exception::Exception): xdaq::Application(s) 
 
 {   
-  xgi::bind(this,&HelloTStore::query, "query");
-  //  xgi::bind(this,&HelloTStore::insert, "insert");
+
   xgi::bind(this,&HelloTStore::Default, "Default");
   xgi::bind(this,&HelloTStore::setParameter, "setParameter");
+  xgi::bind(this,&HelloTStore::query, "query");
 
   getApplicationInfoSpace()->fireItemAvailable("myParameter", &myParameter_);
   //  xdata::UnsignedLong myParameter_;
@@ -41,13 +41,13 @@ void HelloTStore::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excep
   *out << cgicc::a("Query").set("href",method) << std::endl;
 
 
-  *out << cgicc::fieldset().set("style","font-size: 10pt; font-family: arial;")
-    *out << std::endl;
+  *out << cgicc::fieldset().set("style","font-size: 10pt; font-family: arial;");
+  *out << std::endl;
   *out << cgicc::legend("Set the value of myParameter") << cgicc::p() << std::endl;
   *out << cgicc::form().set("method","GET").set("action", method) << std::endl;
-  *out << cgicc::input().set("type","text").set("name","value").set("value", myParameter_.toString())
-										  *out << std::endl;
-  *out << cgicc::input().set("type","submit").set("value","Apply") << std::endl;
+  *out << cgicc::input().set("type","text").set("name","value").set("value", myParameter_.toString());
+  *out << std::endl;
+  *out << cgicc::input().set("type","submit").set("value","Run Number") << std::endl;
   *out << cgicc::form() << std::endl;
   *out << cgicc::fieldset(); 
   
@@ -74,6 +74,7 @@ void HelloTStore::query(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
 	*out<<"  Column  "<<*column<<"              "<<"   Value  "<<value<<std::endl;
       }
     }
+    *out<<"  Parameter  "<<myParameter_<<std::endl;
 
 
   } catch (xcept::Exception &e) {
@@ -124,7 +125,7 @@ std::string HelloTStore::connect() throw (xcept::Exception) {
 	
   //login credentials in format username/password
   //  request.addTStoreParameter("credentials","castaned/Lederman1234");  // testDB change for your username/password
-  request.addTStoreParameter("credentials","CMS_GEM_APPUSER_R/XXXXXX");  //GEMDB change for your username/password
+  request.addTStoreParameter("credentials","CMS_GEM_APPUSER_R/GEM_Reader_2015");  //GEMDB change for your username/password
 	
   //connection will time out after 10 minutes
   toolbox::TimeInterval timeout(600,0); 
