@@ -1,8 +1,8 @@
-Simple xDAQ application that connects to a DB, methods to access the values and 
-insert new ones are implemented using tstore client
+Simple xDAQ application that uses tstore client to connect to the database
+define views and make queries for configuration of GEM online system
 
 
-source oracle environment
+- source oracle environment (needed to connect to GEMDB)
 source /afs/cern.ch/project/oracle/script/setoraenv.sh
 
 
@@ -10,25 +10,27 @@ source /afs/cern.ch/project/oracle/script/setoraenv.sh
 
 0.  src/common/HelloTStore.cc change   
 
-  request.addTStoreParameter("credentials","castaned/XXXXX");  // user database change for your username/password
   request.addTStoreParameter("credentials","GEMDB/XXXXX");  //GEMDB change for your username/password
+  (request pasword to Umesh)
 
 
 1.- Compilation 
 
-    make  (first need to set the environment variables as in any xdaq app)
+    source gemsetup.sh  (source xDAQ environment)
+    make  
 
 2.- Execution
 
-    export TSTORE_XML=$PWD/views/   (View files define which table we will look at)
+    export TSTORE_XML=$PWD/views/   (This folder contains the different views defined in the DB schema)
     xdaq.sh  -p 12345 -c $PWD/xml/hellotstore.xml -e $PWD/xml/hellotstore.profile
 
 3. In the browser 
 
-   Once inside the browser
 
-   http://gem904daq01.cern.ch:12345 (enter tstore application and select the query method)
+   http://gem904daq01.cern.ch:12345 (enter tstore application and select the HelloTStore application)}
 
 
-4.- Different view can be configure, so far views/ directory include calls to VFAT2 configuration table
+4.- Type the Run Number to extract VFAT2 configuration parameters (for the moment in the database only RUN_NUMBER=1 is defined)
+
+
 

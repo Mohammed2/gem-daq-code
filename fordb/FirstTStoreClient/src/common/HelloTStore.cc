@@ -18,7 +18,7 @@ throw (xdaq::exception::Exception): xdaq::Application(s)
 {   
 
   xgi::bind(this,&HelloTStore::Default, "Default");
-  xgi::bind(this,&HelloTStore::setParameter, "setParameter");
+  //  xgi::bind(this,&HelloTStore::setParameter, "setParameter");
   xgi::bind(this,&HelloTStore::query, "query");
 
   getApplicationInfoSpace()->fireItemAvailable("myParameter", &myParameter_);
@@ -32,19 +32,19 @@ void HelloTStore::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excep
   std::string method =
     toolbox::toString("/%s/query",getApplicationDescriptor()->getURN().c_str());
 
-  std::string method2=
-    toolbox::toString("/%s/setParameter",getApplicationDescriptor()->getURN().c_str());
+  //  std::string method2=
+  //    toolbox::toString("/%s/setParameter",getApplicationDescriptor()->getURN().c_str());
  
-  *out << cgicc::HTMLDoctype(cgicc::HTMLDoctype::eStrict) << std::endl;
-  *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
-  *out << cgicc::title("Simple Query") << std::endl;
-  *out << cgicc::a("Query").set("href",method) << std::endl;
+  //  *out << cgicc::HTMLDoctype(cgicc::HTMLDoctype::eStrict) << std::endl;
+  //  *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
+  //  *out << cgicc::title("Simple Query") << std::endl;
+  //  *out << cgicc::a("Query").set("href",method) << std::endl;
 
 
   *out << cgicc::fieldset().set("style","font-size: 10pt; font-family: arial;");
   *out << std::endl;
-  *out << cgicc::legend("Set the value of myParameter") << cgicc::p() << std::endl;
-  *out << cgicc::form().set("method2","GET").set("action", method2) << std::endl;
+  *out << cgicc::legend("Select the Run Number to display VFAT2 configuration") << cgicc::p() << std::endl;
+  *out << cgicc::form().set("method","GET").set("action", method) << std::endl;
   *out << cgicc::input().set("type","text").set("name","value").set("value", myParameter_.toString());
   *out << std::endl;
   *out << cgicc::input().set("type","submit").set("value","Run Number") << std::endl;
@@ -63,19 +63,29 @@ void HelloTStore::query(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
     std::string connectionID=connect();
     query(connectionID,results);
     disconnect(connectionID);
+    
+    cgicc::Cgicc cgi(in);
+    myParameter_ = cgi["value"]->getIntegerValue();
+    this->Default(in,out);
+
+    *out<<" Run Number selected:   "<<myParameter_.toString()<<std::endl;
+    *out<<" ===================   "<<myParameter_.toString()<<std::endl;
+    *out<<" ===================   "<<myParameter_.toString()<<std::endl;
 		
     std::vector<std::string> columns=results.getColumns();
     for (unsigned long rowIndex=0;rowIndex<results.getRowCount();rowIndex++ ) {
-      LOG4CPLUS_INFO(this->getApplicationLogger(),"\n");
-      *out<<"  index  "<<rowIndex<<std::endl;
-      for (std::vector<std::string>::iterator column=columns.begin(); column!=columns.end(); ++column) {
-	std::string value=results.getValueAt(rowIndex,*column)->toString();
-	LOG4CPLUS_INFO(this->getApplicationLogger(),*column+": "+value);
-	*out<<"  Column  "<<*column<<"              "<<"   Value  "<<value<<std::endl;
+      if(results.getValueAt(rowIndex,"RUN_NUMBER")->toString() == myParameter_.toString()){
+	LOG4CPLUS_INFO(this->getApplicationLogger(),"\n");
+	*out<<"  index  "<<rowIndex<<std::endl;
+	for (std::vector<std::string>::iterator column=columns.begin(); column!=columns.end(); ++column) {
+	  std::string value=results.getValueAt(rowIndex,*column)->toString();
+	  LOG4CPLUS_INFO(this->getApplicationLogger(),*column+": "+value);
+	  *out<<"  Column  "<<*column<<"              "<<"   Value  "<<value<<std::endl;
+	}
       }
     }
-
-
+    
+    
   } catch (xcept::Exception &e) {
     LOG4CPLUS_ERROR(this->getApplicationLogger(),xcept::stdformat_exception_history(e));
   }
@@ -186,7 +196,7 @@ void HelloTStore::setParameter(xgi::Input * in, xgi::Output * out ) throw (xgi::
       cgicc::Cgicc cgi(in);
       myParameter_ = cgi["value"]->getIntegerValue();
       this->Default(in,out);
-      *out<<"  Parameter  "<<myParameter_<<std::endl;
+      //      *out<<"  Parameter  "<<myParameter_<<std::endl;
 
     }
   catch (const std::exception & e)
