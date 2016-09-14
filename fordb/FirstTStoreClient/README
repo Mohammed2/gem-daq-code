@@ -10,7 +10,8 @@ source /afs/cern.ch/project/oracle/script/setoraenv.sh
 
 0.  src/common/HelloTStore.cc change   
 
-  request.addTStoreParameter("credentials","castaned/XXXXX");  //change for your username/password
+  request.addTStoreParameter("credentials","castaned/XXXXX");  // user database change for your username/password
+  request.addTStoreParameter("credentials","GEMDB/XXXXX");  //GEMDB change for your username/password
 
 
 1.- Compilation 
