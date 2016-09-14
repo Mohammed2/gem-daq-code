@@ -11,7 +11,7 @@ source /afs/cern.ch/project/oracle/script/setoraenv.sh
 0.  src/common/HelloTStore.cc change   
 
   request.addTStoreParameter("credentials","GEMDB/XXXXX");  //GEMDB change for your username/password
-  (request pasword to Umesh)
+  (request pasword to Umesh/Alfredo)
 
 
 1.- Compilation 
