@@ -69,22 +69,33 @@ void HelloTStore::query(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
     this->Default(in,out);
 
     *out<<" Run Number selected:   "<<myParameter_.toString()<<std::endl;
-    *out<<" ===================   "<<myParameter_.toString()<<std::endl;
-    *out<<" ===================   "<<myParameter_.toString()<<std::endl;
-		
+
+    *out << cgicc::table().set("class", "table");
+    *out << "<tr><h2><div align=\"center\">VFAT2 parameters</div></h2></tr>" << std::endl;
+    *out << "<tr>" << std::endl;		
     std::vector<std::string> columns=results.getColumns();
     for (unsigned long rowIndex=0;rowIndex<results.getRowCount();rowIndex++ ) {
       if(results.getValueAt(rowIndex,"RUN_NUMBER")->toString() == myParameter_.toString()){
 	LOG4CPLUS_INFO(this->getApplicationLogger(),"\n");
 	*out<<"  index  "<<rowIndex<<std::endl;
+	int k=0;
 	for (std::vector<std::string>::iterator column=columns.begin(); column!=columns.end(); ++column) {
 	  std::string value=results.getValueAt(rowIndex,*column)->toString();
 	  LOG4CPLUS_INFO(this->getApplicationLogger(),*column+": "+value);
-	  *out<<"  Column  "<<*column<<"              "<<"   Value  "<<value<<std::endl;
+	  if(k==4) *out << cgicc::tr();
+	  *out << cgicc::td();
+	  *out<<"  Column  "<<*column<<std::endl;
+	  *out<<"  Value   "<<value<<std::endl;
+	  k++;
+	  if(k>4) k=0;
 	}
       }
     }
-    
+    *out << "</tr>" << std::endl;
+    *out << cgicc::table() <<std::endl;;
+    *out << "</div>" << std::endl;
+    *out << cgicc::br()<< std::endl;
+    *out << cgicc::hr()<< std::endl;    
     
   } catch (xcept::Exception &e) {
     LOG4CPLUS_ERROR(this->getApplicationLogger(),xcept::stdformat_exception_history(e));
