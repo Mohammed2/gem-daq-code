@@ -35,8 +35,8 @@ void HelloTStore::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excep
   //  std::string method2=
   //    toolbox::toString("/%s/setParameter",getApplicationDescriptor()->getURN().c_str());
  
-  //  *out << cgicc::HTMLDoctype(cgicc::HTMLDoctype::eStrict) << std::endl;
-  //  *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
+  *out << cgicc::HTMLDoctype(cgicc::HTMLDoctype::eStrict) << std::endl;
+  *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
   //  *out << cgicc::title("Simple Query") << std::endl;
   //  *out << cgicc::a("Query").set("href",method) << std::endl;
 
