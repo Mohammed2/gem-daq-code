@@ -8,6 +8,9 @@
       <![CDATA[SELECT *
 	       FROM CMS_GEM_MUON_VIEW.GEM_VFAT2_CONFIGURATION_VIEW VFATCONF]]>
     </sql:query>
-
+    <sql:query xmlns:sql="urn:tstore-view-SQL" name="AMC13">
+      <![CDATA[SELECT *
+	       FROM CMS_GEM_MUON_VIEW.GEM_AMC13_CONFIGURATION_VIEW AMC13CONF]]>
+    </sql:query>
   </tstore:view>
 </tstore:configuration>
