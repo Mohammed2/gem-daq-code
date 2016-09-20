@@ -84,8 +84,7 @@ void HelloTStore::query(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
 	  LOG4CPLUS_INFO(this->getApplicationLogger(),*column+": "+value);
 	  if(k==4) *out << cgicc::tr();
 	  *out << cgicc::td();
-	  *out<<"  Column  "<<*column<<std::endl;
-	  *out<<"  Value   "<<value<<std::endl;
+	  *out<<"  Column  "<<*column<<"   Value   "<<value<<std::endl;
 	  k++;
 	  if(k>4) k=0;
 	}
@@ -148,11 +147,10 @@ std::string HelloTStore::connect() throw (xcept::Exception) {
   request.addTStoreParameter("credentials","CMS_GEM_APPUSER_R/GEM_Reader_2015");  //GEMDB change for your username/password
 	
   //connection will time out after 10 minutes
-  toolbox::TimeInterval timeout(600,0); 
+  toolbox::TimeInterval timeout(1200,0); 
   request.addTStoreParameter("timeout",timeout.toString("xs:duration"));
 	
   xoap::MessageReference message=request.toSOAP();
-	
   xoap::MessageReference response=sendSOAPMessage(message);
 	
   //use the TStore client library to extract the response from the reply

@@ -5,10 +5,6 @@
     <tstore:connection dbname="int2r_nolb" xmlns:tstore="urn:xdaq-tstore:1.0"/> 
     <!--    <tstore:connection dbname="devdb11" xmlns:tstore="urn:xdaq-tstore:1.0"/>   -->
     <sql:query xmlns:sql="urn:tstore-view-SQL" name="hello">
-      <!-- <![CDATA[select 'hello world' from dual]]> -->
-<!--      <![CDATA[SELECT VFATCONF.BIAS_VCAL
-	       FROM CMS_GEM_MUON_VIEW.GEM_VFAT2_CONFIGURATION_VIEW VFATCONF
-	       WHERE VFATCONF.VFAT2_SERNUM = '0xfe3c']]> -->
       <![CDATA[SELECT *
 	       FROM CMS_GEM_MUON_VIEW.GEM_VFAT2_CONFIGURATION_VIEW VFATCONF]]>
     </sql:query>
