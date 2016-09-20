@@ -81,7 +81,7 @@ void HelloTStore::query(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
 	  LOG4CPLUS_INFO(this->getApplicationLogger(),*column+": "+value);
 	  *out<<"<tr>Column"<<*column<<std::endl;
 	  *out<<"<td>   Value  "<<value<<"</td>"<<std::endl;
-	  *out<<"</tr>"<<endl;
+	  *out<<"</tr>"<<std::endl;
 	}
       }
     }
