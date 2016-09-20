@@ -79,8 +79,10 @@ void HelloTStore::query(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
 	for (std::vector<std::string>::iterator column=columns.begin(); column!=columns.end(); ++column) {
 	  std::string value=results.getValueAt(rowIndex,*column)->toString();
 	  LOG4CPLUS_INFO(this->getApplicationLogger(),*column+": "+value);
-	  *out<<"<th>Column"<<*column<<"</th>"<<std::endl;
-	  *out<<"<td>   Value  "<<value<<"</td>"<<std::endl;
+	  *out<<"<tr>"<<std::endl;
+	  *out<<"<th>Column  "<<*column<<"</th>"<<std::endl;
+	  *out<<"</tr>"<<std::endl;
+	  //	  *out<<"<td>   Value  "<<value<<"</td>"<<std::endl;
 	}
       }
     }
