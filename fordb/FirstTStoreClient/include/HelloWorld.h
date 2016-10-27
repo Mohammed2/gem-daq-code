@@ -1,6 +1,7 @@
 #ifndef HelloWorld_h
 #define HelloWorld_h
 #include "xdaq/Application.h"
+#include "GEMDBAccess.h"
 
 class HelloWorld: public xdaq::Application {
         public:
