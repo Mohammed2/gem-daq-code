@@ -24,9 +24,9 @@ ROOTCFLAGS =$(shell root-config --cflags)
 ROOTLIBS   =$(shell root-config --libs)
 ROOTGLIBS  =$(shell root-config --glibs) 
 
-Sources+=HelloTStore.cc TStoreRequest.cc GEMDBAccess.cc HelloWorld.cc
+Sources+=HelloTStore.cc TStoreRequest.cc GEMDBAccess.cc HelloWorld.cc SimpleWeb.cc
 
-DynamicLibrary=HelloTStore GEMDBAccess HelloWorld
+DynamicLibrary=HelloTStore GEMDBAccess HelloWorld SimpleWeb
 
 IncludeDirs =$(BUILD_HOME)/$(Project)/$(Package)/include
 IncludeDirs+=$(XDAQ_ROOT)/include
