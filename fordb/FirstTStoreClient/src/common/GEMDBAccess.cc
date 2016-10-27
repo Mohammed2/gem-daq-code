@@ -52,7 +52,11 @@ gem::utils::db::GEMDBAccess::~GEMDBAccess()
  void gem::utils::db::GEMDBAccess::query(xdata::Table &results) throw (xgi::exception::Exception) {
   try {
     xdata::Table results;
-		
+
+    *out<<" Before the connection to DB  "<<std::endl;
+    *out<<" Before the connection to DB  "<<std::endl;
+    *out<<" Before the connection to DB  "<<std::endl;
+    
     std::string connectionID=connect();
     SetView(connectionID,results);
     disconnect(connectionID);
