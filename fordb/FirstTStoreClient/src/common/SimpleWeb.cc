@@ -17,14 +17,20 @@ SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
 }
 
 
+void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::exception::Exception) {
+  *out << cgicc::HTMLDoctype(cgicc::HTMLDoctype::eStrict) << std::endl;
+  *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
+  *out << cgicc::title("Simple Web") << std::endl;
+  *out << cgicc::a("Visit the XDAQ Web site").set("href","http://xdaq.web.cern.ch") << std::endl;
+}
 
-xoap::MessageReference HelloTStore::sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception) {
+xoap::MessageReference SimpleWeb::sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception) {
   xoap::MessageReference reply;
-	
+  
   std::cout << "Message: " << std::endl;
   message->writeTo(std::cout);
   std::cout << std::endl;
-	
+  
   try {
     xdaq::ApplicationDescriptor * tstoreDescriptor = getApplicationContext()->getDefaultZone()->getApplicationDescriptor("tstore::TStore",0);
     xdaq::ApplicationDescriptor * tstoretestDescriptor=this->getApplicationDescriptor();
@@ -36,7 +42,7 @@ xoap::MessageReference HelloTStore::sendSOAPMessage(xoap::MessageReference &mess
   }
 	
   xoap::SOAPBody body = reply->getSOAPPart().getEnvelope().getBody();
-		
+  
   std::cout << std::endl << "Response: " << std::endl;
   reply->writeTo(std::cout);
   std::cout << std::endl;

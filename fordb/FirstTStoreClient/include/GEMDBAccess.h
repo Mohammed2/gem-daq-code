@@ -15,6 +15,7 @@ namespace gem {
       {
 
       public:
+
 	GEMDBAccess();
 	~GEMDBAccess();
 

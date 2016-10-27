@@ -3,7 +3,7 @@
 #include "xdaq/WebApplication.h"
 #include "xgi/Method.h"
 #include "cgicc/HTMLClasses.h"
-#include "xdata/Application.h"
+#include "xdaq/Application.h"
 
 
 class SimpleWeb: public xdaq::Application {

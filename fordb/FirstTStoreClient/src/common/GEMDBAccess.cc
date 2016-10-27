@@ -8,6 +8,7 @@
 #include "xgi/Method.h"
 #include "xdaq/WebApplication.h"
 #include "cgicc/HTMLClasses.h"
+#include "SimpleWeb.h"
 //#include "tstoretest/RandomData.h"
 
 gem::utils::db::GEMDBAccess::GEMDBAccess()
@@ -53,11 +54,16 @@ gem::utils::db::GEMDBAccess::~GEMDBAccess()
   try {
     xdata::Table results;
 
-    *out<<" Before the connection to DB  "<<std::endl;
-    *out<<" Before the connection to DB  "<<std::endl;
-    *out<<" Before the connection to DB  "<<std::endl;
+    std::cout<<" Before the connection to DB  "<<std::endl;
+    std::cout<<" Before the connection to DB  "<<std::endl;
+    std::cout<<" Before the connection to DB  "<<std::endl;
     
     std::string connectionID=connect();
+
+    std::cout<<" after connection to DB  "<<std::endl;
+    std::cout<<" after connection to DB  "<<std::endl;
+    std::cout<<" after connection to DB  "<<std::endl;
+
     SetView(connectionID,results);
     disconnect(connectionID);
     
@@ -96,54 +102,71 @@ gem::utils::db::GEMDBAccess::~GEMDBAccess()
 
 }
 
-xoap::MessageReference gem::utils::db::GEMDBAccess::sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception) {
-  xoap::MessageReference reply;
+// xoap::MessageReference gem::utils::db::GEMDBAccess::sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception) {
+//   xoap::MessageReference reply;
 	
-  std::cout << "Message: " << std::endl;
-  message->writeTo(std::cout);
-  std::cout << std::endl;
+//   std::cout << "Message: " << std::endl;
+//   message->writeTo(std::cout);
+//   std::cout << std::endl;
 	
-  try {
-    //    //    xdaq::ApplicationDescriptor * tstoreDescriptor = getApplicationContext()->getDefaultZone()->getApplicationDescriptor("tstore::TStore",0);
-    //    xdaq::ApplicationDescriptor * tstoretestDescriptor=this->getApplicationDescriptor();
-    //    reply = getApplicationContext()->postSOAP(message,*tstoretestDescriptor, *tstoreDescriptor);
-  } 
-  catch (xdaq::exception::Exception& e) {
-    //    LOG4CPLUS_ERROR(this->getApplicationLogger(),xcept::stdformat_exception_history(e));
-    XCEPT_RETHROW(xcept::Exception, "Could not post SOAP message. ", e);
-  }
+//   try {
+//     xdaq::ApplicationDescriptor * tstoreDescriptor = getApplicationContext()->getDefaultZone()->getApplicationDescriptor("tstore::TStore",0);
+//     xdaq::ApplicationDescriptor * tstoretestDescriptor=this->getApplicationDescriptor();
+//     reply = getApplicationContext()->postSOAP(message,*tstoretestDescriptor, *tstoreDescriptor);
+//   } 
+//   catch (xdaq::exception::Exception& e) {
+//     //    LOG4CPLUS_ERROR(this->getApplicationLogger(),xcept::stdformat_exception_history(e));
+//     XCEPT_RETHROW(xcept::Exception, "Could not post SOAP message. ", e);
+//   }
+
+//   std::cout << "Entry   1 " << std::endl;
 	
-  xoap::SOAPBody body = reply->getSOAPPart().getEnvelope().getBody();
+//   xoap::SOAPBody body = reply->getSOAPPart().getEnvelope().getBody();
+//   std::cout << "Entry   2 " << std::endl;
 		
-  std::cout << std::endl << "Response: " << std::endl;
-  reply->writeTo(std::cout);
-  std::cout << std::endl;
+//   std::cout << std::endl << "Response: " << std::endl;
+//   reply->writeTo(std::cout);
+//   std::cout << std::endl;
+//   std::cout << "Entry   3 " << std::endl;
 	
-  if (body.hasFault()) {
-    XCEPT_RAISE (xcept::Exception, body.getFault().getFaultString());
-  }
-  return reply;
-}
+//   if (body.hasFault()) {
+//     XCEPT_RAISE (xcept::Exception, body.getFault().getFaultString());
+//   }
+//   return reply;
+// }
 
 std::string gem::utils::db::GEMDBAccess::connect() throw (xcept::Exception) {
 
   TStoreRequest request("connect");
+
+  std::cout<<" entry 1 connect   "<<std::endl;
 	
   //  add the view ID
   request.addTStoreParameter("id","urn:tstore-view-SQL:VFAT2");
+
+  std::cout<<" entry 2 connect   "<<std::endl;
 	
   //this parameter is mandatory. "basic" is the only value allowed at the moment
   request.addTStoreParameter("authentication","basic");
 	
+  std::cout<<" entry 3 connect   "<<std::endl;
   //login credentials in format username/password
   request.addTStoreParameter("credentials","CMS_GEM_APPUSER_R/GEM_Reader_2015");  // Development GEMDB
 	
+  std::cout<<" entry 4 connect   "<<std::endl;
+
   //connection will time out after 20 minutes
   toolbox::TimeInterval timeout(1200,0); 
   request.addTStoreParameter("timeout",timeout.toString("xs:duration"));
+  std::cout<<" entry 5 connect   "<<std::endl;
 	
   xoap::MessageReference message=request.toSOAP();
-  xoap::MessageReference response=sendSOAPMessage(message);
+
+  std::cout<<" entry 6 connect   "<<std::endl;
+
+  xoap::MessageReference response= sendSOAPMessage(message);
+
+  std::cout<<" entry 7 connect   "<<std::endl;
 	
   //use the TStore client library to extract the response from the reply
   return tstoreclient::connectionID(response);
@@ -157,7 +180,7 @@ void gem::utils::db::GEMDBAccess::disconnect(const std::string &connectionID) th
   
   xoap::MessageReference message=request.toSOAP();
   
-  sendSOAPMessage(message);
+  //  SimpleWeb::sendSOAPMessage(message);
 }
 
 void gem::utils::db::GEMDBAccess::SetView(const std::string &connectionID,xdata::Table &results) throw (xcept::Exception) {
@@ -180,13 +203,13 @@ void gem::utils::db::GEMDBAccess::SetView(const std::string &connectionID,xdata:
   request.addViewSpecificParameter("name","VFAT2Settings");
   
   xoap::MessageReference message=request.toSOAP();
-  xoap::MessageReference response=sendSOAPMessage(message);
+  //  xoap::MessageReference response=sendSOAPMessage(message);
   
   //use the TStore client library to extract the first attachment of type "table"
   //from the SOAP response
-  if (!tstoreclient::getFirstAttachmentOfType(response,results)) {
-    XCEPT_RAISE (xcept::Exception, "Server returned no data");
-  }
+  //  if (!tstoreclient::getFirstAttachmentOfType(response,results)) {
+  //    XCEPT_RAISE (xcept::Exception, "Server returned no data");
+  //  }
 }
 
 

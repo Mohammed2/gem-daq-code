@@ -8,6 +8,6 @@ HelloWorld::HelloWorld(xdaq::ApplicationStub * s)
     LOG4CPLUS_INFO(this->getApplicationLogger(),"Hello World!");            
 
     xdata::Table VFAT2ParamDB;
-    //    GEMDBAccessObj.query(VFAT2ParamDB);
+    GEMDBAccessObj.query(VFAT2ParamDB);
     
 }
