@@ -5,6 +5,8 @@
 
 class HelloWorld: public xdaq::Application {
         public:
+
+       gem::utils::db::GEMDBAccess GEMDBAccessObj;
         
         XDAQ_INSTANTIATOR();
         

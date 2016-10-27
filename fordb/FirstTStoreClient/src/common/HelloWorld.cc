@@ -1,4 +1,5 @@
 #include "HelloWorld.h"
+#include "xdata/Table.h"
 
 XDAQ_INSTANTIATOR_IMPL(HelloWorld)
 HelloWorld::HelloWorld(xdaq::ApplicationStub * s)
@@ -6,9 +7,7 @@ HelloWorld::HelloWorld(xdaq::ApplicationStub * s)
 {
     LOG4CPLUS_INFO(this->getApplicationLogger(),"Hello World!");            
 
-    GEMDBAccess GEMDBAccessObj;
-
     xdata::Table VFAT2ParamDB;
-    GEMDBAccessObj.query(VFAT2ParamDB);
+    //    GEMDBAccessObj.query(VFAT2ParamDB);
     
 }
