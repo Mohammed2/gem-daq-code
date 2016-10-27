@@ -182,7 +182,6 @@ void HelloTStore::query(const std::string &connectionID,xdata::Table &results) t
   //for an SQLView, the name parameter refers to the name of a query section in the configuration
   //We'll use the "hello" one.
   request.addViewSpecificParameter("name","hello");
-  request.addViewSpecificParameter("name","AMC13");
   
   xoap::MessageReference message=request.toSOAP();
   xoap::MessageReference response=sendSOAPMessage(message);
