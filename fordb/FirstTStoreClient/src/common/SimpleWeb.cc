@@ -62,7 +62,7 @@ SimpleWeb::getDBInfo::getDBInfo(){
   
   xoap::MessageReference ViewInfo = GEMDBobj.getViewInfo("VFAT2");
 
-  // std::string connectionID = GEMDBobj.connect(sendSOAPMessage(ViewInfo));
+  std::string connectionID = GEMDBobj.connect(SimpleWeb::sendSOAPMessage(ViewInfo));
 
   // xdata::Table results;
 
