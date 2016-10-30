@@ -55,7 +55,7 @@ xoap::MessageReference  gem::utils::db::GEMDBAccess::getViewInfo(const std::stri
 
 
 
-const std::string gem::utils::db::GEMDBAccess::connect(xoap::MessageReference &response) throw (xcept::Exception) {
+std::string gem::utils::db::GEMDBAccess::connect(xoap::MessageReference &response) throw (xcept::Exception) {
   return tstoreclient::connectionID(response);
 }
 
