@@ -62,6 +62,20 @@ SimpleWeb::getDBInfo::getDBInfo(){
   
   xoap::MessageReference ViewInfo = GEMDBobj.getViewInfo("VFAT2");
 
+  std::string connectionID = gem::utils::db::GEMDBAccess::connect(sendSOAPMessage(ViewInfo));
+
+  xdata::Table results;
+
+  xoap::MessageReference response = gem::utils::db::GEMDBAccess::SetViewInfo("VFAT2",connectionID);
+
+
+  gem::utils::db::GEMDBAccess::SetView(response,results);
+
+  xoap::MessageReference disconnectmsg = gem::utils::db::GEMDBAccess::disconnectmsg(connectionID);
+
+
+  sendSOAPMessage(disconnectmsg);
+
 
 }
 
@@ -69,17 +83,4 @@ SimpleWeb::getDBInfo::getDBInfo(){
 
   
 
-// std::string connectionID = gem::utils::db::GEMDBAccess::connect(sendSOAPMessage(ViewInfo));
-
-// xdata::Table results;
-
-// xoap::MessageReference response = gem::utils::db::GEMDBAccess::SetViewInfo("VFAT2",connectionID);
-
-
-// gem::utils::db::GEMDBAccess::SetView(response,results);
-
-// xoap::MessageReference disconnectmsg = gem::utils::db::GEMDBAccess::disconnectmsg(connectionID);
-
-
-// sendSOAPMessage(disconnectmsg);
 
