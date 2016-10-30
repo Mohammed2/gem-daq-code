@@ -66,9 +66,9 @@ void SimpleWeb::getDBInfo(){
 
   std::string connectionID = GEMDBobj.connect(ConnectionInfo);
 
-  // xdata::Table results;
+  xdata::Table results;
 
-  // xoap::MessageReference response = GEMDBobj.SetViewInfo("VFAT2",connectionID);
+  xoap::MessageReference response = GEMDBobj.SetViewInfo("VFAT2",connectionID);
   
   // GEMDBobj.SetView(response,results);
   
