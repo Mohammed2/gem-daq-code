@@ -74,9 +74,9 @@ void SimpleWeb::getDBInfo(){
 
   GEMDBobj.SetView(responseInfo,results);
   
-  // xoap::MessageReference disconnectmsg = GEMDBobj.disconnectmsg(connectionID);
+  xoap::MessageReference disconnectmsg = GEMDBobj.disconnectmsg(connectionID);
 
-  // sendSOAPMessage(disconnectmsg);
+  sendSOAPMessage(disconnectmsg);
   
 
 }
