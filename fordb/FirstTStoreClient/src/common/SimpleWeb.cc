@@ -68,7 +68,7 @@ SimpleWeb::getDBInfo::getDBInfo(){
 
   xoap::MessageReference response = GEMDBobj.SetViewInfo("VFAT2",connectionID);
   
-  gem::utils::db::GEMDBAccess::SetView(response,results);
+  GEMDBobj.SetView(response,results);
   
   xoap::MessageReference disconnectmsg = GEMDBobj.disconnectmsg(connectionID);
 
