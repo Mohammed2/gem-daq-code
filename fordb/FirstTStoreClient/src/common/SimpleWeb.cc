@@ -56,7 +56,7 @@ xoap::MessageReference SimpleWeb::sendSOAPMessage(xoap::MessageReference &messag
 }
 
 
-xoap::MessageReference ViewInfo = GEMDBoj.getViewInfo("VFAT2");
+//xoap::MessageReference ViewInfo = GEMDBoj.getViewInfo("VFAT2");
   
 
 // std::string connectionID = gem::utils::db::GEMDBAccess::connect(sendSOAPMessage(ViewInfo));

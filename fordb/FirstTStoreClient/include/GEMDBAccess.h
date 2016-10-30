@@ -20,7 +20,7 @@ namespace gem {
 	~GEMDBAccess();
 
 	xoap::MessageReference getViewInfo(const std::string &vname) throw (xcept::Exception);
-	std::string connect(xoap::MessageReference &response) throw (xcept::Exception) throw (xcept::Exception);
+	std::string connect(xoap::MessageReference &response) throw (xcept::Exception);
 	xoap::MessageReference SetViewInfo(const std::string &vname, const std::string &connectionID) throw (xcept::Exception); 
 	void SetView(xoap::MessageReference &resp, xdata::Table &res) throw (xcept::Exception);
 
