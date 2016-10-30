@@ -52,12 +52,16 @@ void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
   *out << cgicc::a("Visit the XDAQ Web site").set("href","http://xdaq.web.cern.ch") << std::endl;
 
 
-  xoap::MessageReference ViewInfo = GEMDBoj.getViewInfo("VFAT2");
 
 
 }
 
+SimpleWeb::getDBInfo(){
 
+  xoap::MessageReference ViewInfo = GEMDBoj.getViewInfo("VFAT2");
+
+
+}
 
 
 
