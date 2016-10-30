@@ -60,19 +60,21 @@ xoap::MessageReference SimpleWeb::sendSOAPMessage(xoap::MessageReference &messag
 }
 
 
-xoap::MessageReference ViewInfo = gem::utils::db::GEMDBAccess::getViewInfo("VFAT2");
+gem::utils::db::GEMDBAccess GEMDBobj;
 
-std::string connectionID = gem::utils::db::GEMDBAccess::connect(sendSOAPMessage(ViewInfo));
+xoap::MessageReference ViewInfo = GEMDBoj.getViewInfo("VFAT2");
 
-xdata::Table results;
+// std::string connectionID = gem::utils::db::GEMDBAccess::connect(sendSOAPMessage(ViewInfo));
 
-xoap::MessageReference response = gem::utils::db::GEMDBAccess::SetViewInfo("VFAT2",connectionID);
+// xdata::Table results;
 
-
-gem::utils::db::GEMDBAccess::SetView(response,results);
-
-xoap::MessageReference disconnectmsg = gem::utils::db::GEMDBAccess::disconnectmsg(connectionID);
+// xoap::MessageReference response = gem::utils::db::GEMDBAccess::SetViewInfo("VFAT2",connectionID);
 
 
-sendSOAPMessage(disconnectmsg);
+// gem::utils::db::GEMDBAccess::SetView(response,results);
+
+// xoap::MessageReference disconnectmsg = gem::utils::db::GEMDBAccess::disconnectmsg(connectionID);
+
+
+// sendSOAPMessage(disconnectmsg);
 
