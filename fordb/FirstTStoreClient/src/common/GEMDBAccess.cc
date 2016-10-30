@@ -102,7 +102,7 @@ xoap::MessageReference gem::utils::db::GEMDBAccess::disconnectmsg(const std::str
  }
 
 
- void gem::utils::db::GEMDBAccess::SetView(xoap::MessageReference &response, xdata::Table &results) throw (xcept::Exception) {
+void gem::utils::db::GEMDBAccess::SetView(xoap::MessageReference &response, xdata::Table &results) throw (xcept::Exception) {
 
    // use the TStore client library to extract the first attachment of type "table"
    //from the SOAP response
