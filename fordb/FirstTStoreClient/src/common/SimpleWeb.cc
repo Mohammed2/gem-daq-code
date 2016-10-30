@@ -62,17 +62,17 @@ SimpleWeb::getDBInfo::getDBInfo(){
   
   xoap::MessageReference ViewInfo = GEMDBobj.getViewInfo("VFAT2");
 
-  std::string connectionID = GEMDBobj.connect(sendSOAPMessage(ViewInfo));
+  // std::string connectionID = GEMDBobj.connect(sendSOAPMessage(ViewInfo));
 
-  xdata::Table results;
+  // xdata::Table results;
 
-  xoap::MessageReference response = GEMDBobj.SetViewInfo("VFAT2",connectionID);
+  // xoap::MessageReference response = GEMDBobj.SetViewInfo("VFAT2",connectionID);
   
-  GEMDBobj.SetView(response,results);
+  // GEMDBobj.SetView(response,results);
   
-  xoap::MessageReference disconnectmsg = GEMDBobj.disconnectmsg(connectionID);
+  // xoap::MessageReference disconnectmsg = GEMDBobj.disconnectmsg(connectionID);
 
-  sendSOAPMessage(disconnectmsg);
+  // sendSOAPMessage(disconnectmsg);
 
 
 }
