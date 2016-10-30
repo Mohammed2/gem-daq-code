@@ -70,7 +70,7 @@ void SimpleWeb::getDBInfo(){
 
   xoap::MessageReference responsemsg = GEMDBobj.SetViewInfo("VFAT2",connectionID);
   
-  GEMDBobj.SetView(sendSOAPMessage(response),results);
+  GEMDBobj.SetView(sendSOAPMessage(responsemsg),results);
   
   // xoap::MessageReference disconnectmsg = GEMDBobj.disconnectmsg(connectionID);
 
