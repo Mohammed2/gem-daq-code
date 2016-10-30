@@ -16,16 +16,6 @@ SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
     xgi::bind(this,&SimpleWeb::Default, "Default");           
 }
 
-
-void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::exception::Exception) {
-  *out << cgicc::HTMLDoctype(cgicc::HTMLDoctype::eStrict) << std::endl;
-  *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
-  *out << cgicc::title("Simple Web") << std::endl;
-  *out << cgicc::a("Visit the XDAQ Web site").set("href","http://xdaq.web.cern.ch") << std::endl;
-}
-
-
-
 xoap::MessageReference SimpleWeb::sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception) {
   xoap::MessageReference reply;
   
@@ -55,8 +45,22 @@ xoap::MessageReference SimpleWeb::sendSOAPMessage(xoap::MessageReference &messag
     return reply;
 }
 
+void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::exception::Exception) {
+  *out << cgicc::HTMLDoctype(cgicc::HTMLDoctype::eStrict) << std::endl;
+  *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
+  *out << cgicc::title("Simple Web") << std::endl;
+  *out << cgicc::a("Visit the XDAQ Web site").set("href","http://xdaq.web.cern.ch") << std::endl;
 
-//xoap::MessageReference ViewInfo = GEMDBoj.getViewInfo("VFAT2");
+
+  xoap::MessageReference ViewInfo = GEMDBoj.getViewInfo("VFAT2");
+
+
+}
+
+
+
+
+
   
 
 // std::string connectionID = gem::utils::db::GEMDBAccess::connect(sendSOAPMessage(ViewInfo));
