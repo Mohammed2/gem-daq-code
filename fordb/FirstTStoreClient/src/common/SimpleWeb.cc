@@ -26,41 +26,38 @@ void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
 
 
 
-getDBdata(){
+xoap::MessageReference SimpleWeb::sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception) {
+  xoap::MessageReference reply;
   
-  xoap::MessageReference SimpleWeb::sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception) {
-    xoap::MessageReference reply;
-    
     std::cout << "Message: " << std::endl;
     message->writeTo(std::cout);
     std::cout << std::endl;
     
-  try {
+    try {
     xdaq::ApplicationDescriptor * tstoreDescriptor = getApplicationContext()->getDefaultZone()->getApplicationDescriptor("tstore::TStore",0);
     xdaq::ApplicationDescriptor * tstoretestDescriptor=this->getApplicationDescriptor();
     reply = getApplicationContext()->postSOAP(message,*tstoretestDescriptor, *tstoreDescriptor);
-  } 
-  catch (xdaq::exception::Exception& e) {
-    LOG4CPLUS_ERROR(this->getApplicationLogger(),xcept::stdformat_exception_history(e));
-    XCEPT_RETHROW(xcept::Exception, "Could not post SOAP message. ", e);
-  }
-  
-  xoap::SOAPBody body = reply->getSOAPPart().getEnvelope().getBody();
-  
-  std::cout << std::endl << "Response: " << std::endl;
-  reply->writeTo(std::cout);
-  std::cout << std::endl;
-  
-  if (body.hasFault()) {
-    XCEPT_RAISE (xcept::Exception, body.getFault().getFaultString());
-  }
-  return reply;
-  }
-  
-  
-  xoap::MessageReference ViewInfo = GEMDBoj.getViewInfo("VFAT2");
-  
+    } 
+    catch (xdaq::exception::Exception& e) {
+      LOG4CPLUS_ERROR(this->getApplicationLogger(),xcept::stdformat_exception_history(e));
+      XCEPT_RETHROW(xcept::Exception, "Could not post SOAP message. ", e);
+    }
+    
+    xoap::SOAPBody body = reply->getSOAPPart().getEnvelope().getBody();
+    
+    std::cout << std::endl << "Response: " << std::endl;
+    reply->writeTo(std::cout);
+    std::cout << std::endl;
+    
+    if (body.hasFault()) {
+      XCEPT_RAISE (xcept::Exception, body.getFault().getFaultString());
+    }
+    return reply;
 }
+
+
+xoap::MessageReference ViewInfo = GEMDBoj.getViewInfo("VFAT2");
+  
 
 // std::string connectionID = gem::utils::db::GEMDBAccess::connect(sendSOAPMessage(ViewInfo));
 

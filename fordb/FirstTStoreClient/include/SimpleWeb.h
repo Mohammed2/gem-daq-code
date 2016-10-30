@@ -14,11 +14,9 @@ class SimpleWeb: public xdaq::Application {
         SimpleWeb(xdaq::ApplicationStub * s) throw (xdaq::exception::Exception);
         void Default(xgi::Input * in, xgi::Output * out ) throw (xgi::exception::Exception);
 
-        private:
-
-	xoap::MessageReference sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception);
-
+	gem::utils::db::GEMDBAccess GEMDBobj;
 	
+	xoap::MessageReference sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception);
 
 	
 };
