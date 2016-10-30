@@ -8,6 +8,7 @@
 #include "xgi/Method.h"
 #include "xdaq/WebApplication.h"
 #include "cgicc/HTMLClasses.h"
+#include "GEMDBAccess.h"
 
 XDAQ_INSTANTIATOR_IMPL(SimpleWeb)
 SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
@@ -23,6 +24,11 @@ void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
   *out << cgicc::title("Simple Web") << std::endl;
   *out << cgicc::a("Visit the XDAQ Web site").set("href","http://xdaq.web.cern.ch") << std::endl;
 }
+
+
+
+
+
 
 xoap::MessageReference SimpleWeb::sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception) {
   xoap::MessageReference reply;
@@ -52,3 +58,21 @@ xoap::MessageReference SimpleWeb::sendSOAPMessage(xoap::MessageReference &messag
   }
   return reply;
 }
+
+
+xoap::MessageReference ViewInfo = gem::utils::db::GEMDBAccess::getViewInfo("VFAT2");
+
+std::string connectionID = gem::utils::db::GEMDBAccess::connect(sendSOAPMessage(ViewInfo));
+
+xdata::Table results;
+
+xoap::MessageReference response = gem::utils::db::GEMDBAccess::SetViewInfo("VFAT2",connectionID);
+
+
+gem::utils::db::GEMDBAccess::SetView(response,results);
+
+xoap::MessageReference disconnectmsg = gem::utils::db::GEMDBAccess::disconnectmsg(connectionID);
+
+
+sendSOAPMessage(disconnectmsg);
+
