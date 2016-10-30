@@ -74,7 +74,8 @@ void SimpleWeb::getDBInfo(){
 
   GEMDBobj.SetView(responseInfo,results);
 
-  xdata::Serializable* s = results.getValueAt(1,"BIAS_IPREAMPIN");
+  unsigned long rowIndex=0;
+  xdata::Serializable* s = results.getValueAt(rowIndex,"BIAS_IPREAMPIN");
   std::cout<<" data of serializable  "<<s->type()<<std::endl;
     
   xoap::MessageReference disconnectmsg = GEMDBobj.disconnectmsg(connectionID);
