@@ -17,7 +17,7 @@ SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
     xgi::bind(this,&SimpleWeb::Default, "Default");           
 }
 
-xoap::MessageReference SimpleWeb::sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception) {
+xoap::MessageReference SimpleWeb::getDBInfo::sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception) {
   xoap::MessageReference reply;
   
     std::cout << "Message: " << std::endl;
