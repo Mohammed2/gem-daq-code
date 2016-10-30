@@ -55,7 +55,7 @@ xoap::MessageReference  gem::utils::db::GEMDBAccess::getViewInfo(const std::stri
 
 
 
-std::string gem::utils::db::GEMDBAccess::connect(xoap::MessageReference response) throw (xcept::Exception) {
+std::string gem::utils::db::GEMDBAccess::connect(xoap::MessageReference &response) throw (xcept::Exception) {
   return tstoreclient::connectionID(response);
 }
 
@@ -73,7 +73,7 @@ xoap::MessageReference gem::utils::db::GEMDBAccess::disconnectmsg(const std::str
 
 
  
- xoap::MessageReference gem::utils::db::GEMDBAccess::SetViewInfo(std::string viewname,const std::string &connectionID) throw (xcept::Exception) {
+ xoap::MessageReference gem::utils::db::GEMDBAccess::SetViewInfo(const std::string &viewname,const std::string &connectionID) throw (xcept::Exception) {
 
    //for a query, we need to send some parameters which are specific to SQLView.
    //these use the namespace tstore-view-SQL. 
@@ -102,7 +102,7 @@ xoap::MessageReference gem::utils::db::GEMDBAccess::disconnectmsg(const std::str
  }
 
 
- void gem::utils::db::GEMDBAccess::SetView(xoap::MessageReference response, xdata::Table &results) throw (xcept::Exception) {
+ void gem::utils::db::GEMDBAccess::SetView(xoap::MessageReference &response, xdata::Table &results) throw (xcept::Exception) {
 
    // use the TStore client library to extract the first attachment of type "table"
    //from the SOAP response
