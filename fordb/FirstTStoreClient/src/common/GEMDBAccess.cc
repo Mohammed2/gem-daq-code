@@ -29,7 +29,7 @@ gem::utils::db::GEMDBAccess::~GEMDBAccess()
 // }
 
 
-xoap::MessageReference  gem::utils::db::GEMDBAccess::getViewInfo(string ViewName) throw (xcept::Exception) {
+xoap::MessageReference  gem::utils::db::GEMDBAccess::getViewInfo(const std::string ViewName) throw  (xcept::Exception) {
   
   TStoreRequest request("connect");
   
