@@ -22,6 +22,8 @@ class SimpleWeb: public xdaq::Application {
 	{
 	public:
 
+	  
+	  SimpleWeb SimpleWebobj;
 	  gem::utils::db::GEMDBAccess GEMDBobj;
 
 	  getDBInfo();
