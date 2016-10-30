@@ -4,7 +4,7 @@
 #include "xgi/Method.h"
 #include "cgicc/HTMLClasses.h"
 #include "xdaq/Application.h"
-#includ  "GEMDBAccess.h"
+#include  "GEMDBAccess.h"
 
 class SimpleWeb: public xdaq::Application {
         public:
