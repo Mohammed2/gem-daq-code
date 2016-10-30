@@ -4,7 +4,7 @@
 #include "xgi/Method.h"
 #include "cgicc/HTMLClasses.h"
 #include "xdaq/Application.h"
-
+#include "GEMDBAccess.h"
 
 class SimpleWeb: public xdaq::Application {
         public:
@@ -17,6 +17,8 @@ class SimpleWeb: public xdaq::Application {
         private:
 
 	xoap::MessageReference sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception);
+
+	
 
 	
 };
