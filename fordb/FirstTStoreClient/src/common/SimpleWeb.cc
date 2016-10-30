@@ -52,7 +52,7 @@ void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
   *out << cgicc::title("Simple Web") << std::endl;
   *out << cgicc::a("Visit the XDAQ Web site").set("href","http://xdaq.web.cern.ch") << std::endl;
 
-
+  getDBInfo();
 
 
 }
