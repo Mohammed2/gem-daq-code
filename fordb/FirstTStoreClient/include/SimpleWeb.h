@@ -12,6 +12,8 @@ class SimpleWeb: public xdaq::Application {
         XDAQ_INSTANTIATOR();
         
         SimpleWeb(xdaq::ApplicationStub * s) throw (xdaq::exception::Exception);
+
+	gem::utils::db::GEMDBAccess GEMDBobj;
 	
 	xoap::MessageReference sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception);
         void Default(xgi::Input * in, xgi::Output * out ) throw (xgi::exception::Exception);
@@ -21,8 +23,9 @@ class SimpleWeb: public xdaq::Application {
 	class getDBInfo
 	{
 	public:
+
+
 	  getDBInfo();
-	  gem::utils::db::GEMDBAccess GEMDBobj;
 
 	};
 
