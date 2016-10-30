@@ -8,6 +8,7 @@
 #include "xgi/Method.h"
 #include "xdaq/WebApplication.h"
 #include "cgicc/HTMLClasses.h"
+//#include "GEMDBAccess.h"
 
 XDAQ_INSTANTIATOR_IMPL(SimpleWeb)
 SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
@@ -58,7 +59,8 @@ void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
 
 SimpleWeb::getDBInfo::getDBInfo(){
 
-  xoap::MessageReference ViewInfo = GEMDBoj.getViewInfo("VFAT2");
+  
+  xoap::MessageReference ViewInfo = GEMDBobj.getViewInfo("VFAT2");
 
 
 }

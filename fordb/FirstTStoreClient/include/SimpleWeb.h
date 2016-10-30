@@ -4,7 +4,7 @@
 #include "xgi/Method.h"
 #include "cgicc/HTMLClasses.h"
 #include "xdaq/Application.h"
-#include "GEMDBAccess.h"
+#includ  "GEMDBAccess.h"
 
 class SimpleWeb: public xdaq::Application {
         public:
@@ -13,8 +13,6 @@ class SimpleWeb: public xdaq::Application {
         
         SimpleWeb(xdaq::ApplicationStub * s) throw (xdaq::exception::Exception);
 
-	gem::utils::db::GEMDBAccess GEMDBobj;
-	
 	xoap::MessageReference sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception);
         void Default(xgi::Input * in, xgi::Output * out ) throw (xgi::exception::Exception);
 
@@ -24,6 +22,7 @@ class SimpleWeb: public xdaq::Application {
 	{
 	public:
 
+	  gem::utils::db::GEMDBAccess GEMDBobj;
 
 	  getDBInfo();
 
