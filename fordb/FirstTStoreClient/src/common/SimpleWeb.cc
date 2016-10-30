@@ -84,7 +84,10 @@ void SimpleWeb::getDBInfo(){
 
   sendSOAPMessage(disconnectmsg);
 
+  std::string::size_type sz;   // alias of size_t
+  integer int0 = std::stoi (s,&sz);
 
+  std::cout<<" conversion to integer  "<<int0<<std::endl;
 
 }
 
