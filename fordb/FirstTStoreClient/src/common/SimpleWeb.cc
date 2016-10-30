@@ -56,7 +56,7 @@ void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
 
 }
 
-SimpleWeb::getDBInfo(){
+SimpleWeb::getDBInfo::getDBInfo(){
 
   xoap::MessageReference ViewInfo = GEMDBoj.getViewInfo("VFAT2");
 
