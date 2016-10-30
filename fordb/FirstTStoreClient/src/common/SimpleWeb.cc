@@ -89,6 +89,14 @@ void SimpleWeb::getDBInfo(){
 
   std::cout<<" conversion to integer  "<<int0<<std::endl;
 
+  uint8_t int1;
+
+  int1 = (uint8_t) int0;
+
+  std::cout<<" conversion to uint8_t  "<<int1<<std::endl;
+  
+  
+
 }
 
 
