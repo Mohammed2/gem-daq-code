@@ -76,7 +76,9 @@ void SimpleWeb::getDBInfo(){
 
   unsigned long rowIndex=0;
   xdata::Serializable* s = results.getValueAt(rowIndex,"BIAS_IPREAMPIN");
-  std::cout<<" data of serializable  "<<s->type()<<std::endl;
+  xdata::Serializable* s1 = results.getValueAt(rowIndex,"CR0_TRGMODE");
+  std::cout<<" data of serializable  BIAS_IPREAMPIN "<<s->type()<<std::endl;
+  std::cout<<" data of serializable  CR0_TRGMODE    "<<s1->type()<<std::endl;
     
   xoap::MessageReference disconnectmsg = GEMDBobj.disconnectmsg(connectionID);
 
