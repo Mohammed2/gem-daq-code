@@ -57,12 +57,12 @@ void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
 
 }
 
-SimpleWeb::getDBInfo::getDBInfo(){
+void SimpleWeb::getDBInfo(){
 
   
   xoap::MessageReference ViewInfo = GEMDBobj.getViewInfo("VFAT2");
 
-  std::string connectionID = GEMDBobj.connect(SimpleWebobj.sendSOAPMessage(ViewInfo));
+  std::string connectionID = GEMDBobj.connect(sendSOAPMessage(ViewInfo));
 
   // xdata::Table results;
 
