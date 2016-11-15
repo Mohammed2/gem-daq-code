@@ -57,13 +57,13 @@ xoap::MessageReference SimpleWeb::sendSOAPMessage(xoap::MessageReference &messag
 void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::exception::Exception) {
   //  a link to the call loadconfig method below
   
-  std::string config = toolbox::toString("/%s/loadconfig", getApplicationDescriptor()->getURN().c_str());
+  std::string method = toolbox::toString("/%s/loadconfig", getApplicationDescriptor()->getURN().c_str());
   
   *out << cgicc::HTMLDoctype(cgicc::HTMLDoctype::eStrict) << std::endl;
   *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
   *out << cgicc::title("xDAQ-GEMDB configuration") << std::endl;
   //  *out << cgicc::a("Visit the XDAQ Web site").set("href","http://xdaq.web.cern.ch") << std::endl;
-  *out<< cgicc::form().set("config","GET").set("action",config) << std::endl;
+  *out<< cgicc::form().set("method","GET").set("action",method) << std::endl;
   *out << cgicc::input().set("type","text").set("name","value").set("value", myParameter_.toString());
   *out << std::endl;
   *out << cgicc::input().set("type","submit").set("value","Type of Configuration (default, latscan, hvscan)") << std::endl;
