@@ -22,8 +22,9 @@ class SimpleWeb: public xdaq::Application {
 	
 	xdata::Table getDBInfo(std::string view);
 
-
-
+        protected:
+    	      xdata::UnsignedLong myParameter_;
+	
 
 	
 };
