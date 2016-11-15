@@ -14,9 +14,10 @@ XDAQ_INSTANTIATOR_IMPL(SimpleWeb)
 SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
     throw (xdaq::exception::Exception): xdaq::Application(s) 
 {
+  
   xgi::bind(this,&SimpleWeb::Default, "Default");           
   xgi::bind(this,&SimpleWeb::loadconfig, "LoadConfig");
-
+  
   getApplicationInfoSpace()->fireItemAvailable("myConfig", &myParameter_);
 
   
@@ -76,40 +77,44 @@ void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
 
 
 void SimpleWeb::loadconfig(xgi::Input * in, xgi::Output * out) throw (xgi::exception::Exception){
+  try{
 
-  xdata::Table defaultConf = SimpleWeb::getDBInfo("VFAT2");
-  xdata::Table vFatsinGEB  = SimpleWeb::getDBInfo("TGEB");
+    xdata::Table defaultConf = SimpleWeb::getDBInfo("VFAT2");
+    xdata::Table vFatsinGEB  = SimpleWeb::getDBInfo("TGEB");
 
 
-  cgicc::Cgicc cgi(in);
-  myParameter_ = cgi["value"]->getIntegerValue();
-  this->Default(in,out);
-
-  *out<<" Configuration Selected:     "<<myParameter_.toString()<<std::endl;
+  // cgicc::Cgicc cgi(in);
+  // myParameter_ = cgi["value"]->getIntegerValue();
+  // this->Default(in,out);
   
-  *out << cgicc::table().set("class", "table");
-  *out << "<tr><h2><div align=\"center\">VFAT2 parameters</div></h2></tr>" << std::endl;
-  std::vector<std::string> columns=defaultConf.getColumns();
-  for (unsigned long rowIndex=0;rowIndex<defaultConf.getRowCount();rowIndex++ ) {
-    //   if(results.getValueAt(rowIndex,"RUN_NUMBER")->toString() == myParameter_.toString()){
-    LOG4CPLUS_INFO(this->getApplicationLogger(),"\n");
-    *out<<" <tr>Index "<<rowIndex<<"</tr>"<<std::endl;
-    for (std::vector<std::string>::iterator column=columns.begin(); column!=columns.end(); ++column) {
-      std::string value=defaultConf.getValueAt(rowIndex,*column)->toString();
-      LOG4CPLUS_INFO(this->getApplicationLogger(),*column+": "+value);
-      *out<<"<tr>"<<std::endl;
-      *out<<"<td>"<<*column<<":  "<<value<<"</td>"<<std::endl;
-      *out<<"</tr>"<<std::endl;
-    }
-    //    }
+  // *out<<" Configuration Selected:     "<<myParameter_.toString()<<std::endl;
+  
+  // *out << cgicc::table().set("class", "table");
+  // *out << "<tr><h2><div align=\"center\">VFAT2 parameters</div></h2></tr>" << std::endl;
+  // std::vector<std::string> columns=defaultConf.getColumns();
+  // for (unsigned long rowIndex=0;rowIndex<defaultConf.getRowCount();rowIndex++ ) {
+  //   //   if(results.getValueAt(rowIndex,"RUN_NUMBER")->toString() == myParameter_.toString()){
+  //   LOG4CPLUS_INFO(this->getApplicationLogger(),"\n");
+  //   *out<<" <tr>Index "<<rowIndex<<"</tr>"<<std::endl;
+  //   for (std::vector<std::string>::iterator column=columns.begin(); column!=columns.end(); ++column) {
+  //     std::string value=defaultConf.getValueAt(rowIndex,*column)->toString();
+  //     LOG4CPLUS_INFO(this->getApplicationLogger(),*column+": "+value);
+  //     *out<<"<tr>"<<std::endl;
+  //     *out<<"<td>"<<*column<<":  "<<value<<"</td>"<<std::endl;
+  //     *out<<"</tr>"<<std::endl;
+  //   }
+  //   //    }
+  // }
+  // *out << "</tr>" << std::endl;
+  // *out << cgicc::table() <<std::endl;;
+  // *out << "</div>" << std::endl;
+  // *out << cgicc::br()<< std::endl;
+  // *out << cgicc::hr()<< std::endl;    
+
+  } catch (xcept::Exception &e) {
+    LOG4CPLUS_ERROR(this->getApplicationLogger(),xcept::stdformat_exception_history(e));
   }
-  *out << "</tr>" << std::endl;
-  *out << cgicc::table() <<std::endl;;
-  *out << "</div>" << std::endl;
-  *out << cgicc::br()<< std::endl;
-  *out << cgicc::hr()<< std::endl;    
-
-
+  
 }
 
 
