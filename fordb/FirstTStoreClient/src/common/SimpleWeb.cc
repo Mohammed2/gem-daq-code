@@ -17,7 +17,7 @@ SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
 {
   
   xgi::bind(this,&SimpleWeb::Default, "Default");           
-  xgi::bind(this,&SimpleWeb::loadconfig, "loadConfig");
+  xgi::bind(this,&SimpleWeb::loadconfig, "loadconfig");
   getApplicationInfoSpace()->fireItemAvailable("myConfig", &myParameter_);
   
 }
@@ -35,7 +35,7 @@ void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
 
   *out << cgicc::fieldset().set("style","font-size: 10pt; font-family: arial;");
   *out << std::endl;
-  *out << cgicc::legend("Select the Run Number to display VFAT2 configuration") << cgicc::p() << std::endl;
+  *out << cgicc::legend("GEMDB-xDAQ interface") << cgicc::p() << std::endl;
   *out << cgicc::form().set("method","GET").set("action", method) << std::endl;
   *out << cgicc::input().set("type","text").set("name","value").set("value", myParameter_.toString());
   *out << std::endl;
