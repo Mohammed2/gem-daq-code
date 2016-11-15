@@ -95,7 +95,7 @@ void SimpleWeb::loadconfig(xgi::Input * in, xgi::Output * out) throw (xgi::excep
     LOG4CPLUS_INFO(this->getApplicationLogger(),"\n");
     *out<<" <tr>Index "<<rowIndex<<"</tr>"<<std::endl;
     for (std::vector<std::string>::iterator column=columns.begin(); column!=columns.end(); ++column) {
-      std::string value=results.getValueAt(rowIndex,*column)->toString();
+      std::string value=defaultConf.getValueAt(rowIndex,*column)->toString();
       LOG4CPLUS_INFO(this->getApplicationLogger(),*column+": "+value);
       *out<<"<tr>"<<std::endl;
       *out<<"<td>"<<*column<<":  "<<value<<"</td>"<<std::endl;
