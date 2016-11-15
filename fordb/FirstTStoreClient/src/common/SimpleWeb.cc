@@ -76,8 +76,6 @@ void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
 
 
 void SimpleWeb::loadconfig(xgi::Input * in, xgi::Output * out) throw (xgi::exception::Exception){
- try {
-
 
    xdata::Table defaultConf = SimpleWeb::getDBInfo("VFAT2");
 
