@@ -23,37 +23,6 @@ SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
 }
 
 
-xoap::MessageReference SimpleWeb::sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception) {
-  xoap::MessageReference reply;
-  
-  std::cout << "Message: " << std::endl;
-  message->writeTo(std::cout);
-  std::cout << std::endl;
-  
-  try {
-    xdaq::ApplicationDescriptor * tstoreDescriptor = getApplicationContext()->getDefaultZone()->getApplicationDescriptor("tstore::TStore",0);
-    xdaq::ApplicationDescriptor * tstoretestDescriptor=this->getApplicationDescriptor();
-    reply = getApplicationContext()->postSOAP(message,*tstoretestDescriptor, *tstoreDescriptor);
-  } 
-  catch (xdaq::exception::Exception& e) {
-    LOG4CPLUS_ERROR(this->getApplicationLogger(),xcept::stdformat_exception_history(e));
-    XCEPT_RETHROW(xcept::Exception, "Could not post SOAP message. ", e);
-  }
-  
-  xoap::SOAPBody body = reply->getSOAPPart().getEnvelope().getBody();
-  
-  std::cout << std::endl << "Response: " << std::endl;
-  reply->writeTo(std::cout);
-  std::cout << std::endl;
-  
-  if (body.hasFault()) {
-    XCEPT_RAISE (xcept::Exception, body.getFault().getFaultString());
-  }
-  return reply;
-}
-
-
-
 void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::exception::Exception) {
   //  a link to the call loadconfig method below
   
@@ -61,16 +30,18 @@ void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::excepti
   
   *out << cgicc::HTMLDoctype(cgicc::HTMLDoctype::eStrict) << std::endl;
   *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
-  *out << cgicc::title("xDAQ-GEMDB configuration") << std::endl;
-  //  *out << cgicc::a("Visit the XDAQ Web site").set("href","http://xdaq.web.cern.ch") << std::endl;
-  *out<< cgicc::form().set("method","GET").set("action",method) << std::endl;
+  //  *out << cgicc::title("Simple Query") << std::endl;
+  //  *out << cgicc::a("Query").set("href",method) << std::endl;
+
+  *out << cgicc::fieldset().set("style","font-size: 10pt; font-family: arial;");
+  *out << std::endl;
+  *out << cgicc::legend("Select the Run Number to display VFAT2 configuration") << cgicc::p() << std::endl;
+  *out << cgicc::form().set("method","GET").set("action", method) << std::endl;
   *out << cgicc::input().set("type","text").set("name","value").set("value", myParameter_.toString());
   *out << std::endl;
-  *out << cgicc::input().set("type","submit").set("value","Type of Configuration (default, latscan, hvscan)") << std::endl;
+  *out << cgicc::input().set("type","submit").set("value","Configuration (default,et...)") << std::endl;
   *out << cgicc::form() << std::endl;
   *out << cgicc::fieldset(); 
-  
-  //  getDBInfo();
 
 }
 
@@ -160,7 +131,33 @@ xdata::Table SimpleWeb::getDBInfo(std::string viewName){
  }
 
 
-
+xoap::MessageReference SimpleWeb::sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception) {
+  xoap::MessageReference reply;
   
+  std::cout << "Message: " << std::endl;
+  message->writeTo(std::cout);
+  std::cout << std::endl;
+  
+  try {
+    xdaq::ApplicationDescriptor * tstoreDescriptor = getApplicationContext()->getDefaultZone()->getApplicationDescriptor("tstore::TStore",0);
+    xdaq::ApplicationDescriptor * tstoretestDescriptor=this->getApplicationDescriptor();
+    reply = getApplicationContext()->postSOAP(message,*tstoretestDescriptor, *tstoreDescriptor);
+  } 
+  catch (xdaq::exception::Exception& e) {
+    LOG4CPLUS_ERROR(this->getApplicationLogger(),xcept::stdformat_exception_history(e));
+    XCEPT_RETHROW(xcept::Exception, "Could not post SOAP message. ", e);
+  }
+  
+  xoap::SOAPBody body = reply->getSOAPPart().getEnvelope().getBody();
+  
+  std::cout << std::endl << "Response: " << std::endl;
+  reply->writeTo(std::cout);
+  std::cout << std::endl;
+  
+  if (body.hasFault()) {
+    XCEPT_RAISE (xcept::Exception, body.getFault().getFaultString());
+  }
+  return reply;
+}
 
 

@@ -25,7 +25,7 @@ class SimpleWeb: public xdaq::Application {
         protected:
     	      xdata::UnsignedLong myParameter_;
 	
-
+	      
 	
 };
 #endif
