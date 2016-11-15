@@ -11,15 +11,14 @@
 //#include "GEMDBAccess.h"
 
 XDAQ_INSTANTIATOR_IMPL(SimpleWeb)
+
 SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
     throw (xdaq::exception::Exception): xdaq::Application(s) 
 {
   
   xgi::bind(this,&SimpleWeb::Default, "Default");           
-  xgi::bind(this,&SimpleWeb::loadconfig, "LoadConfig");
-  
+  xgi::bind(this,&SimpleWeb::loadconfig, "loadConfig");
   getApplicationInfoSpace()->fireItemAvailable("myConfig", &myParameter_);
-
   
 }
 
@@ -55,15 +54,15 @@ xoap::MessageReference SimpleWeb::sendSOAPMessage(xoap::MessageReference &messag
 
 
 
-
 void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::exception::Exception) {
+  //  a link to the call loadconfig method below
+  
+  std::string config = toolbox::toString("/%s/loadconfig", getApplicationDescriptor()->getURN().c_str());
+  
   *out << cgicc::HTMLDoctype(cgicc::HTMLDoctype::eStrict) << std::endl;
   *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
   *out << cgicc::title("xDAQ-GEMDB configuration") << std::endl;
   //  *out << cgicc::a("Visit the XDAQ Web site").set("href","http://xdaq.web.cern.ch") << std::endl;
-
-  std::string config = toolbox::toString("/%s/loadconfig", getApplicationDescriptor()->getURN().c_str());
-
   *out<< cgicc::form().set("config","GET").set("action",config) << std::endl;
   *out << cgicc::input().set("type","text").set("name","value").set("value", myParameter_.toString());
   *out << std::endl;
@@ -83,9 +82,9 @@ void SimpleWeb::loadconfig(xgi::Input * in, xgi::Output * out) throw (xgi::excep
     xdata::Table vFatsinGEB  = SimpleWeb::getDBInfo("TGEB");
 
 
-  // cgicc::Cgicc cgi(in);
-  // myParameter_ = cgi["value"]->getIntegerValue();
-  // this->Default(in,out);
+    cgicc::Cgicc cgi(in);
+    myParameter_ = cgi["value"]->getIntegerValue();
+    this->Default(in,out);
   
   // *out<<" Configuration Selected:     "<<myParameter_.toString()<<std::endl;
   
