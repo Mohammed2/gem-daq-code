@@ -89,7 +89,7 @@ void SimpleWeb::loadconfig(xgi::Input * in, xgi::Output * out) throw (xgi::excep
 
 
   
- xdata::Table SimpleWeb::getDBInfo(std::string viewName){
+xdata::Table SimpleWeb::getDBInfo(std::string viewName){
 
   
    xoap::MessageReference ViewInfo = GEMDBobj.getViewInfo(viewName);
