@@ -80,11 +80,37 @@ void SimpleWeb::loadconfig(xgi::Input * in, xgi::Output * out) throw (xgi::excep
   xdata::Table defaultConf = SimpleWeb::getDBInfo("VFAT2");
   xdata::Table vFatsinGEB  = SimpleWeb::getDBInfo("TGEB");
 
-   
-    
+
+  cgicc::Cgicc cgi(in);
+  myParameter_ = cgi["value"]->getIntegerValue();
+  this->Default(in,out);
+
+  *out<<" Configuration Selected:     "<<myParameter_.toString()<<std::endl;
+  
+  *out << cgicc::table().set("class", "table");
+  *out << "<tr><h2><div align=\"center\">VFAT2 parameters</div></h2></tr>" << std::endl;
+  std::vector<std::string> columns=defaultConf.getColumns();
+  for (unsigned long rowIndex=0;rowIndex<defaultConf.getRowCount();rowIndex++ ) {
+    //   if(results.getValueAt(rowIndex,"RUN_NUMBER")->toString() == myParameter_.toString()){
+    LOG4CPLUS_INFO(this->getApplicationLogger(),"\n");
+    *out<<" <tr>Index "<<rowIndex<<"</tr>"<<std::endl;
+    for (std::vector<std::string>::iterator column=columns.begin(); column!=columns.end(); ++column) {
+      std::string value=results.getValueAt(rowIndex,*column)->toString();
+      LOG4CPLUS_INFO(this->getApplicationLogger(),*column+": "+value);
+      *out<<"<tr>"<<std::endl;
+      *out<<"<td>"<<*column<<":  "<<value<<"</td>"<<std::endl;
+      *out<<"</tr>"<<std::endl;
+    }
+    //    }
+  }
+  *out << "</tr>" << std::endl;
+  *out << cgicc::table() <<std::endl;;
+  *out << "</div>" << std::endl;
+  *out << cgicc::br()<< std::endl;
+  *out << cgicc::hr()<< std::endl;    
+
+
 }
-
-
 
 
   
@@ -95,7 +121,7 @@ xdata::Table SimpleWeb::getDBInfo(std::string viewName){
    xoap::MessageReference ConnectionInfo = sendSOAPMessage(ViewInfo);
    
    std::string connectionID = GEMDBobj.connect(ConnectionInfo);
-   
+
    xdata::Table results;
    
    xoap::MessageReference responsemsg = GEMDBobj.SetViewInfo(viewName,connectionID);
