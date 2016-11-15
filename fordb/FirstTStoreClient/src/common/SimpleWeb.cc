@@ -87,7 +87,7 @@ void SimpleWeb::loadconfig(xgi::Input * in, xgi::Output * out) throw (xgi::excep
     *out << cgicc::table().set("class", "table");
     *out << "<tr><h2><div align=\"center\"> GEB vfats</div></h2></tr>" << std::endl;
     std::vector<std::string> columns2=vFatsinGEB.getColumns();
-    for (unsigned long rowIndex=0;rowIndex<defaultConf.getRowCount();rowIndex++ ) {
+    for (unsigned long rowIndex=0;rowIndex<vFatsinGEB.getRowCount();rowIndex++ ) {
   //   //   if(results.getValueAt(rowIndex,"RUN_NUMBER")->toString() == myParameter_.toString()){
       LOG4CPLUS_INFO(this->getApplicationLogger(),"\n");
       *out<<" <tr>Index "<<rowIndex<<"</tr>"<<std::endl;
