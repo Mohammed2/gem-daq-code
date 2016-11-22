@@ -17,8 +17,32 @@ SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
 {
   
   xgi::bind(this,&SimpleWeb::Default, "Default");           
-  xgi::bind(this,&SimpleWeb::loadconfig, "loadconfig");
-  getApplicationInfoSpace()->fireItemAvailable("myConfig", &myParameter_);
+  //  xgi::bind(this,&SimpleWeb::loadconfig, "loadconfig");
+  //  getApplicationInfoSpace()->fireItemAvailable("myConfig", &myParameter_);
+
+
+  DEBUG("Accessing DB information");
+  gem::utils::db::GEMDBAccess GEMDBObj;   // Database object
+
+  xoap::MessageReference ViewInfoVFAT = GEMDBObj.getViewInfo("VFAT2");  // view for VFAT2 config
+  xoap::MessageReference ConnectionInfoVFAT = sendSOAPMessage(ViewInfoVFAT); 
+  std::string connectionIDVFAT = GEMDBObj.connect(ConnectionInfoVFAT);
+  xoap::MessageReference responsemsgVFAT = GEMDBObj.SetViewInfo("VFAT2",connectionIDVFAT);
+  xoap::MessageReference responseInfoVFAT = sendSOAPMessage(responsemsgVFAT);
+
+  xoap::MessageReference ViewInfoGEB = GEMDBObj.getViewInfo("TGEB");    // view for GEB config
+  xoap::MessageReference ConnectionInfoGEB = sendSOAPMessage(ViewInfoGEB); 
+  std::string connectionIDGEB = GEMDBObj.connect(ConnectionInfoGEB);
+  xoap::MessageReference responsemsgGEB = GEMDBObj.SetViewInfo("TGEB",connectionIDGEB);
+  xoap::MessageReference responseInfoGEB = sendSOAPMessage(responsemsgGEB);
+  
+  xdata::Table VFAT2ParamDB; 
+  GEMDBObj.SetView(responseInfoVFAT,VFAT2ParamDB);
+  
+  xdata::Table GEBParamDB; 
+  GEMDBObj.SetView(responseInfoGEB,GEBParamDB);
+
+
   
 }
 
@@ -26,134 +50,134 @@ SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
 void SimpleWeb::Default(xgi::Input * in, xgi::Output * out ) throw (xgi::exception::Exception) {
   //  a link to the call loadconfig method below
   
-  std::string method = toolbox::toString("/%s/loadconfig", getApplicationDescriptor()->getURN().c_str());
+  // std::string method = toolbox::toString("/%s/loadconfig", getApplicationDescriptor()->getURN().c_str());
   
-  *out << cgicc::HTMLDoctype(cgicc::HTMLDoctype::eStrict) << std::endl;
-  *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
-  //  *out << cgicc::title("Simple Query") << std::endl;
-  //  *out << cgicc::a("Query").set("href",method) << std::endl;
+  // *out << cgicc::HTMLDoctype(cgicc::HTMLDoctype::eStrict) << std::endl;
+  // *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
+  // //  *out << cgicc::title("Simple Query") << std::endl;
+  // //  *out << cgicc::a("Query").set("href",method) << std::endl;
 
-  *out << cgicc::fieldset().set("style","font-size: 10pt; font-family: arial;");
-  *out << std::endl;
-  *out << cgicc::legend("GEMDB-xDAQ interface") << cgicc::p() << std::endl;
-  *out << cgicc::form().set("method","GET").set("action", method) << std::endl;
-  *out << cgicc::input().set("type","text").set("name","value").set("value", myParameter_.toString());
-  *out << std::endl;
-  *out << cgicc::input().set("type","submit").set("value","Configuration (default,et...)") << std::endl;
-  *out << cgicc::form() << std::endl;
-  *out << cgicc::fieldset(); 
+  // *out << cgicc::fieldset().set("style","font-size: 10pt; font-family: arial;");
+  // *out << std::endl;
+  // *out << cgicc::legend("GEMDB-xDAQ interface") << cgicc::p() << std::endl;
+  // *out << cgicc::form().set("method","GET").set("action", method) << std::endl;
+  // *out << cgicc::input().set("type","text").set("name","value").set("value", myParameter_.toString());
+  // *out << std::endl;
+  // *out << cgicc::input().set("type","submit").set("value","Configuration (default,et...)") << std::endl;
+  // *out << cgicc::form() << std::endl;
+  // *out << cgicc::fieldset(); 
 
 }
 
 
-void SimpleWeb::loadconfig(xgi::Input * in, xgi::Output * out) throw (xgi::exception::Exception){
-  try{
+// void SimpleWeb::loadconfig(xgi::Input * in, xgi::Output * out) throw (xgi::exception::Exception){
+//   try{
 
-    xdata::Table defaultConf = SimpleWeb::getDBInfo("VFAT2");
-    xdata::Table vFatsinGEB  = SimpleWeb::getDBInfo("TGEB");
+//     xdata::Table defaultConf = SimpleWeb::getDBInfo("VFAT2");
+//     xdata::Table vFatsinGEB  = SimpleWeb::getDBInfo("TGEB");
 
 
-    cgicc::Cgicc cgi(in);
-    myParameter_ = cgi["value"]->getIntegerValue();
-    this->Default(in,out);
+//     cgicc::Cgicc cgi(in);
+//     myParameter_ = cgi["value"]->getIntegerValue();
+//     this->Default(in,out);
   
-  // *out<<" Configuration Selected:     "<<myParameter_.toString()<<std::endl;
+//   // *out<<" Configuration Selected:     "<<myParameter_.toString()<<std::endl;
   
-    *out << cgicc::table().set("class", "table");
-    *out << "<tr><h2><div align=\"center\"> VFAT2 default parameters</div></h2></tr>" << std::endl;
-    std::vector<std::string> columns=defaultConf.getColumns();
-    for (unsigned long rowIndex=0;rowIndex<defaultConf.getRowCount();rowIndex++ ) {
-  //   //   if(results.getValueAt(rowIndex,"RUN_NUMBER")->toString() == myParameter_.toString()){
-      LOG4CPLUS_INFO(this->getApplicationLogger(),"\n");
-      *out<<" <tr>Index "<<rowIndex<<"</tr>"<<std::endl;
-      for (std::vector<std::string>::iterator column=columns.begin(); column!=columns.end(); ++column) {
-	std::string value=defaultConf.getValueAt(rowIndex,*column)->toString();
-	LOG4CPLUS_INFO(this->getApplicationLogger(),*column+": "+value);
-	*out<<"<tr>"<<std::endl;
-	*out<<"<td>"<<*column<<":  "<<value<<"</td>"<<std::endl;
-	*out<<"</tr>"<<std::endl;
-      }
-  //   //    }
-    }
-    *out << "</tr>" << std::endl;
-    *out << cgicc::table() <<std::endl;;
-    *out << "</div>" << std::endl;
-    *out << cgicc::br()<< std::endl;
-    *out << cgicc::hr()<< std::endl;
+//     *out << cgicc::table().set("class", "table");
+//     *out << "<tr><h2><div align=\"center\"> VFAT2 default parameters</div></h2></tr>" << std::endl;
+//     std::vector<std::string> columns=defaultConf.getColumns();
+//     for (unsigned long rowIndex=0;rowIndex<defaultConf.getRowCount();rowIndex++ ) {
+//   //   //   if(results.getValueAt(rowIndex,"RUN_NUMBER")->toString() == myParameter_.toString()){
+//       LOG4CPLUS_INFO(this->getApplicationLogger(),"\n");
+//       *out<<" <tr>Index "<<rowIndex<<"</tr>"<<std::endl;
+//       for (std::vector<std::string>::iterator column=columns.begin(); column!=columns.end(); ++column) {
+// 	std::string value=defaultConf.getValueAt(rowIndex,*column)->toString();
+// 	LOG4CPLUS_INFO(this->getApplicationLogger(),*column+": "+value);
+// 	*out<<"<tr>"<<std::endl;
+// 	*out<<"<td>"<<*column<<":  "<<value<<"</td>"<<std::endl;
+// 	*out<<"</tr>"<<std::endl;
+//       }
+//   //   //    }
+//     }
+//     *out << "</tr>" << std::endl;
+//     *out << cgicc::table() <<std::endl;;
+//     *out << "</div>" << std::endl;
+//     *out << cgicc::br()<< std::endl;
+//     *out << cgicc::hr()<< std::endl;
 
 
 
 
-    *out << cgicc::table().set("class", "table");
-    *out << "<tr><h2><div align=\"center\"> GEB vfats</div></h2></tr>" << std::endl;
-    std::vector<std::string> columns2=vFatsinGEB.getColumns();
-    for (unsigned long rowIndex=0;rowIndex<vFatsinGEB.getRowCount();rowIndex++ ) {
-  //   //   if(results.getValueAt(rowIndex,"RUN_NUMBER")->toString() == myParameter_.toString()){
-      LOG4CPLUS_INFO(this->getApplicationLogger(),"\n");
-      *out<<" <tr>Index "<<rowIndex<<"</tr>"<<std::endl;
-      for (std::vector<std::string>::iterator column=columns2.begin(); column!=columns2.end(); ++column) {
-	std::string value=vFatsinGEB.getValueAt(rowIndex,*column)->toString();
-	LOG4CPLUS_INFO(this->getApplicationLogger(),*column+": "+value);
-	*out<<"<tr>"<<std::endl;
-	*out<<"<td>"<<*column<<":  "<<value<<"</td>"<<std::endl;
-	*out<<"</tr>"<<std::endl;
-      }
-      //   //    }
-    }
-    *out << "</tr>" << std::endl;
-    *out << cgicc::table() <<std::endl;;
-    *out << "</div>" << std::endl;
-    *out << cgicc::br()<< std::endl;
-    *out << cgicc::hr()<< std::endl;    
+//     *out << cgicc::table().set("class", "table");
+//     *out << "<tr><h2><div align=\"center\"> GEB vfats</div></h2></tr>" << std::endl;
+//     std::vector<std::string> columns2=vFatsinGEB.getColumns();
+//     for (unsigned long rowIndex=0;rowIndex<vFatsinGEB.getRowCount();rowIndex++ ) {
+//   //   //   if(results.getValueAt(rowIndex,"RUN_NUMBER")->toString() == myParameter_.toString()){
+//       LOG4CPLUS_INFO(this->getApplicationLogger(),"\n");
+//       *out<<" <tr>Index "<<rowIndex<<"</tr>"<<std::endl;
+//       for (std::vector<std::string>::iterator column=columns2.begin(); column!=columns2.end(); ++column) {
+// 	std::string value=vFatsinGEB.getValueAt(rowIndex,*column)->toString();
+// 	LOG4CPLUS_INFO(this->getApplicationLogger(),*column+": "+value);
+// 	*out<<"<tr>"<<std::endl;
+// 	*out<<"<td>"<<*column<<":  "<<value<<"</td>"<<std::endl;
+// 	*out<<"</tr>"<<std::endl;
+//       }
+//       //   //    }
+//     }
+//     *out << "</tr>" << std::endl;
+//     *out << cgicc::table() <<std::endl;;
+//     *out << "</div>" << std::endl;
+//     *out << cgicc::br()<< std::endl;
+//     *out << cgicc::hr()<< std::endl;    
 
-  } catch (xcept::Exception &e) {
-    LOG4CPLUS_ERROR(this->getApplicationLogger(),xcept::stdformat_exception_history(e));
-  }
+//   } catch (xcept::Exception &e) {
+//     LOG4CPLUS_ERROR(this->getApplicationLogger(),xcept::stdformat_exception_history(e));
+//   }
   
-}
+// }
 
-
-  
-xdata::Table SimpleWeb::getDBInfo(std::string viewName){
 
   
-   xoap::MessageReference ViewInfo = GEMDBobj.getViewInfo(viewName);
-   xoap::MessageReference ConnectionInfo = sendSOAPMessage(ViewInfo);
-   
-   std::string connectionID = GEMDBobj.connect(ConnectionInfo);
+// xdata::Table SimpleWeb::getDBInfo(std::string viewName){
 
-   xdata::Table results;
+  
+//    xoap::MessageReference ViewInfo = GEMDBobj.getViewInfo(viewName);
+//    xoap::MessageReference ConnectionInfo = sendSOAPMessage(ViewInfo);
    
-   xoap::MessageReference responsemsg = GEMDBobj.SetViewInfo(viewName,connectionID);
-   
-   xoap::MessageReference responseInfo = sendSOAPMessage(responsemsg);
-   
-   GEMDBobj.SetView(responseInfo,results);
+//    std::string connectionID = GEMDBobj.connect(ConnectionInfo);
 
-   return results;
+//    xdata::Table results;
    
-   // unsigned long rowIndex=0;
-   // xdata::Serializable* s = results.getValueAt(rowIndex,"BIAS_IPREAMPIN");
-   // xdata::Serializable* s1 = results.getValueAt(rowIndex,"CR0_TRGMODE");
-   // std::cout<<" data of serializable  BIAS_IPREAMPIN "<<s->type()<<std::endl;
-   // std::cout<<" data of serializable  CR0_TRGMODE    "<<s1->type()<<std::endl;
+//    xoap::MessageReference responsemsg = GEMDBobj.SetViewInfo(viewName,connectionID);
    
-   // xoap::MessageReference disconnectmsg = GEMDBobj.disconnectmsg(connectionID);
+//    xoap::MessageReference responseInfo = sendSOAPMessage(responsemsg);
    
-   // sendSOAPMessage(disconnectmsg);
+//    GEMDBobj.SetView(responseInfo,results);
+
+//    return results;
    
-   // std::string::size_type sz;   // alias of size_t
-   // int int0 = std::stoi (s->toString(),&sz);
+//    // unsigned long rowIndex=0;
+//    // xdata::Serializable* s = results.getValueAt(rowIndex,"BIAS_IPREAMPIN");
+//    // xdata::Serializable* s1 = results.getValueAt(rowIndex,"CR0_TRGMODE");
+//    // std::cout<<" data of serializable  BIAS_IPREAMPIN "<<s->type()<<std::endl;
+//    // std::cout<<" data of serializable  CR0_TRGMODE    "<<s1->type()<<std::endl;
    
-   // std::cout<<" conversion to integer  "<<int0<<std::endl;
+//    // xoap::MessageReference disconnectmsg = GEMDBobj.disconnectmsg(connectionID);
    
-   // uint8_t int1;
+//    // sendSOAPMessage(disconnectmsg);
    
-   // int1 = (uint8_t) int0;
+//    // std::string::size_type sz;   // alias of size_t
+//    // int int0 = std::stoi (s->toString(),&sz);
    
-   // std::cout<<" conversion to uint8_t  "<<int1<<std::endl;
+//    // std::cout<<" conversion to integer  "<<int0<<std::endl;
    
- }
+//    // uint8_t int1;
+   
+//    // int1 = (uint8_t) int0;
+   
+//    // std::cout<<" conversion to uint8_t  "<<int1<<std::endl;
+   
+//  }
 
 
 xoap::MessageReference SimpleWeb::sendSOAPMessage(xoap::MessageReference &message) throw (xcept::Exception) {
