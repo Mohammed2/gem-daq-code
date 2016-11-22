@@ -49,8 +49,8 @@ SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
   sendSOAPMessage(disconnectmsgGEB);
   
 
-  DEBUG(" Disconnected from DB, information stored in xdata::Tables");
-  DEBUG(" row counting for VFATs in GEB :"<<GEBParamDB.getRowCount());
+  std::cout<<" Disconnected from DB, information stored in xdata::Tables"<<std::endl;
+  std::cout<<" row counting for VFATs in GEB :"<<GEBParamDB.getRowCount()<<std::endl;
   
   for(unsigned long rowIndex=0;rowIndex<GEBParamDB.getRowCount();rowIndex++){
     std::string vfatid=GEBParamDB.getValueAt(rowIndex,"VFAT")->toString();
