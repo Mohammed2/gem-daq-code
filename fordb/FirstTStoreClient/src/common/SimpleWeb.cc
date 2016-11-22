@@ -58,6 +58,11 @@ SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
     std::cout<<"VFAT ID: "<<vfatid<<" VFAT slot "<<vfatslot<<std::endl;
   }
   
+  std::vector<std::string> columns=VFAT2ParamDB.getColumns();
+  for(std::vector<std::string>::iterator column=columns.begin(); column!=columns.end(); ++column){
+    std::string vfatconf=VFAT2ParamDB.getValueAt(0,*column)->toString();
+    DEBUG("VFAT CONFIG :"<<vfatconf);
+  }
   
 }
 
