@@ -55,7 +55,7 @@ SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
   for(unsigned long rowIndex=0;rowIndex<GEBParamDB.getRowCount();rowIndex++){
     std::string vfatid=GEBParamDB.getValueAt(rowIndex,"VFAT")->toString();
     std::string vfatslot=GEBParamDB.getValueAt(rowIndex,"VFAT_POSN")->toString();
-    DEBUG("VFAT ID: "<<vfatid<<" VFAT slot "<<vfatslot);
+    std::cout<<"VFAT ID: "<<vfatid<<" VFAT slot "<<vfatslot<<std::endl;
   }
   
   
