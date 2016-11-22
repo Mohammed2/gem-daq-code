@@ -21,7 +21,7 @@ SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
   //  getApplicationInfoSpace()->fireItemAvailable("myConfig", &myParameter_);
 
 
-  DEBUG("Accessing DB information");
+  std::cout<<"Accessing DB information"<<std::endl;
   gem::utils::db::GEMDBAccess GEMDBObj;   // Database object
 
   xoap::MessageReference ViewInfoVFAT = GEMDBObj.getViewInfo("VFAT2");  // view for VFAT2 config
