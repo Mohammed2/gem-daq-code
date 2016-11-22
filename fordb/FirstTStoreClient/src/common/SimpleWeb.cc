@@ -42,7 +42,22 @@ SimpleWeb::SimpleWeb(xdaq::ApplicationStub * s)
   xdata::Table GEBParamDB; 
   GEMDBObj.SetView(responseInfoGEB,GEBParamDB);
 
+  xoap::MessageReference disconnectmsgVFAT = GEMDBObj.disconnectmsg(connectionIDVFAT); // disconnect from DB
+  sendSOAPMessage(disconnectmsgVFAT);
 
+  xoap::MessageReference disconnectmsgGEB = GEMDBObj.disconnectmsg(connectionIDGEB); // disconnect from DB
+  sendSOAPMessage(disconnectmsgGEB);
+  
+
+  DEBUG(" Disconnected from DB, information stored in xdata::Tables");
+  DEBUG(" row counting for VFATs in GEB :"<<GEBParamDB.getRowCount());
+  
+  for(unsigned long rowIndex=0;rowIndex<GEBParamDB.getRowCount();rowIndex++){
+    std::string vfatid=GEBParamDB.getValueAt(rowIndex,"VFAT")->toString();
+    std::string vfatslot=GEBParamDB.getValueAt(rowIndex,"VFAT_POSN")->toString();
+    DEBUG("VFAT ID: "<<vfatid<<" VFAT slot "<<vfatslot);
+  }
+  
   
 }
 
